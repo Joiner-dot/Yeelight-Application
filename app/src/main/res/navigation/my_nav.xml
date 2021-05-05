@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/listFragments">
+
+    <fragment
+        android:id="@+id/listFragments"
+        android:name="com.example.yeelightapp.activities.fragments.ListFragments"
+        android:label="list_fragments"
+        tools:layout="@layout/list_fragments">
+        <action
+            android:id="@+id/action_listFragments_to_addLamp"
+            app:destination="@id/addLamp" />
+        <action
+            android:id="@+id/action_listFragments_self"
+            app:destination="@id/listFragments" />
+    </fragment>
+    <fragment
+        android:id="@+id/addLamp"
+        android:name="com.example.yeelightapp.activities.fragments.AddLamp"
+        android:label="add_lamp"
+        tools:layout="@layout/add_lamp">
+        <action
+            android:id="@+id/action_addLamp_to_listFragments"
+            app:destination="@id/listFragments" />
+    </fragment>
+</navigation>
