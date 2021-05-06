@@ -1,4 +1,4 @@
-package com.example.yeelightapp.database.interfaces
+package com.example.yeelightapp.database.datasource
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

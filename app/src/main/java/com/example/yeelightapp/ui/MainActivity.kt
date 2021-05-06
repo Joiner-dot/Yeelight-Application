@@ -1,10 +1,10 @@
-package com.example.yeelightapp.activities
+package com.example.yeelightapp.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.yeelightapp.R
+import com.example.yeelightapp.di.appModule
+import org.koin.android.ext.android.startKoin
 
 
 class MainActivity : AppCompatActivity() {
@@ -13,5 +13,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.hide();
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        startKoin(applicationContext, listOf(appModule))
     }
 }

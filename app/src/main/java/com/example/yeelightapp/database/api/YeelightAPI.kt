@@ -1,13 +1,10 @@
-package com.example.yeelightapp.businesslogic
+package com.example.yeelightapp.database.api
 
 import android.graphics.Color
 import android.util.Log
-import com.example.yeelightapp.businesslogic.interfaces.IBusinessLogic
+import com.example.yeelightapp.database.api.interfaces.IYeelightAPI
 import com.example.yeelightapp.lamps.Property
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -16,7 +13,7 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 
-class YeelightAPI : IBusinessLogic {
+class YeelightAPI : IYeelightAPI {
     private lateinit var mBos: BufferedOutputStream
     private lateinit var mReader: BufferedReader
 
@@ -40,52 +37,45 @@ class YeelightAPI : IBusinessLogic {
         return true
     }
 
-    override fun changeRGB(red: Int, green: Int, blue: Int) {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val color = (red * 65536) + (green * 256) + blue
-                val newVal =
-                    "{\"id\":2,\"method\":\"set_rgb\",\"params\":[$color, \"smooth\", 500]}\r\n"
-                mBos.write(newVal.toByteArray())
-                mBos.flush()
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
-            }
+    override suspend fun changeRGB(red: Int, green: Int, blue: Int) {
+        try {
+            val color = (red * 65536) + (green * 256) + blue
+            val newVal =
+                "{\"id\":2,\"method\":\"set_rgb\",\"params\":[$color, \"smooth\", 500]}\r\n"
+            mBos.write(newVal.toByteArray())
+            mBos.flush()
+        } catch (e: Exception) {
+            Log.d("Exception", e.printStackTrace().toString())
         }
     }
 
-    override fun changeBrightness(brightness: Int) {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                mBos.write(("{\"id\":1,\"method\":\"set_bright\",\"params\":[$brightness, \"smooth\", 500]}\r\n").toByteArray())
-                mBos.flush()
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
-            }
+    override suspend fun changeBrightness(brightness: Int) {
+        try {
+            mBos.write(("{\"id\":1,\"method\":\"set_bright\",\"params\":[$brightness, \"smooth\", 500]}\r\n").toByteArray())
+            mBos.flush()
+        } catch (e: Exception) {
+            Log.d("Exception", e.printStackTrace().toString())
         }
     }
 
-    override fun turnOn() {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                Log.d("Button", "ON")
-                mBos.write(("{\"id\":1,\"method\":\"set_power\",\"params\":[\"on\",\"smooth\",500]}\r\n").toByteArray())
-                mBos.flush()
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
-            }
+    override suspend fun turnOn() {
+        try {
+            Log.d("Button", "ON")
+            mBos.write(("{\"id\":1,\"method\":\"set_power\",\"params\":[\"on\",\"smooth\",500]}\r\n").toByteArray())
+            mBos.flush()
+        } catch (e: Exception) {
+            Log.d("Exception", e.printStackTrace().toString())
         }
     }
 
-    override fun turnOff() {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                Log.d("Button", "OFF")
-                mBos.write(("{\"id\":11,\"method\":\"set_power\",\"params\":[\"off\",\"smooth\",500]}\r\n").toByteArray())
-                mBos.flush()
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
-            }
+    override suspend fun turnOff() {
+
+        try {
+            Log.d("Button", "OFF")
+            mBos.write(("{\"id\":11,\"method\":\"set_power\",\"params\":[\"off\",\"smooth\",500]}\r\n").toByteArray())
+            mBos.flush()
+        } catch (e: Exception) {
+            Log.d("Exception", e.printStackTrace().toString())
         }
     }
 

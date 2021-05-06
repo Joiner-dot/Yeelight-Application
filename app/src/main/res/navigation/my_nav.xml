@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragments"
-        android:name="com.example.yeelightapp.activities.fragments.ListFragments"
+        android:name="com.example.yeelightapp.ui.fragments.ListFragments"
         android:label="list_fragments"
         tools:layout="@layout/list_fragments">
         <action
@@ -16,14 +16,22 @@
         <action
             android:id="@+id/action_listFragments_self"
             app:destination="@id/listFragments" />
+        <action
+            android:id="@+id/action_listFragments_to_static1"
+            app:destination="@id/static1" />
     </fragment>
     <fragment
         android:id="@+id/addLamp"
-        android:name="com.example.yeelightapp.activities.fragments.AddLamp"
+        android:name="com.example.yeelightapp.ui.fragments.AddLamp"
         android:label="add_lamp"
         tools:layout="@layout/add_lamp">
         <action
             android:id="@+id/action_addLamp_to_listFragments"
             app:destination="@id/listFragments" />
     </fragment>
+    <fragment
+        android:id="@+id/static1"
+        android:name="com.example.yeelightapp.ui.fragments.Static"
+        android:label="fragment_static"
+        tools:layout="@layout/fragment_static" />
 </navigation>

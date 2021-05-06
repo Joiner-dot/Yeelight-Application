@@ -1,7 +1,6 @@
-package com.example.yeelightapp.activities.fragments
+package com.example.yeelightapp.ui.fragments
 
 import android.os.Bundle
-import android.text.BoringLayout.make
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
-import com.example.yeelightapp.database.interfaces.Lamp
-import com.example.yeelightapp.database.interfaces.LampViewModel
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.make
+import com.example.yeelightapp.database.datasource.Lamp
+import com.example.yeelightapp.ui.viewmodel.LampViewModel
+import org.koin.android.ext.android.get
 
 class AddLamp : Fragment() {
 
@@ -28,7 +26,7 @@ class AddLamp : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.add_lamp, container, false)
 
-        mLampViewModel = ViewModelProvider(this).get(LampViewModel::class.java)
+        mLampViewModel = get<LampViewModel>()
         val select: Button = view.findViewById(R.id.select)
 
         select.setOnClickListener {
