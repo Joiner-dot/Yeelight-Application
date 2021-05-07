@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
 import com.example.yeelightapp.database.datasource.Lamp
@@ -26,7 +25,7 @@ class AddLamp : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.add_lamp, container, false)
 
-        mLampViewModel = get<LampViewModel>()
+        mLampViewModel = get()
         val select: Button = view.findViewById(R.id.select)
 
         select.setOnClickListener {

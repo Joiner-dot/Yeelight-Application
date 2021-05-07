@@ -20,7 +20,7 @@ class YeelightAPI : IYeelightAPI {
     override suspend fun connect(ip: String): Boolean {
         try {
             val mSocket = Socket()
-            mSocket.connect(InetSocketAddress(ip, 55443), 1000)
+            mSocket.connect(InetSocketAddress(ip, 55443), 2000)
             if (!mSocket.isConnected) {
                 throw SocketTimeoutException()
             }

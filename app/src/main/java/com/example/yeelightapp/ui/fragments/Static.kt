@@ -18,10 +18,9 @@ import org.koin.android.ext.android.startKoin
 class Static : Fragment() {
     lateinit var ip: String
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_static, container, false)
         val bundle = this.arguments
         ip = bundle?.getString("IP").toString()
@@ -37,15 +36,25 @@ class Static : Fragment() {
         val onOff: ToggleButton = requireView().findViewById(R.id.onOff2)
         val viewModel: LampViewModel = get<LampViewModel>()
         val e = viewModel.connect(ip)
+        red.isEnabled = false
+        green.isEnabled = false
+        blue.isEnabled = false
+        brightness.isEnabled = false
+        onOff.isEnabled = false
         e.observe(this, { returned ->
             if (!returned) {
                 Toast.makeText(
-                    requireContext(),
-                    "Connection failed",
-                    Toast.LENGTH_LONG
+                        requireContext(),
+                        "Connection failed",
+                        Toast.LENGTH_LONG
                 ).show()
                 this@Static.activity?.onBackPressed()
             } else {
+                red.isEnabled = true
+                green.isEnabled = true
+                blue.isEnabled = true
+                brightness.isEnabled = true
+                onOff.isEnabled = true
                 val res = viewModel.setCurrentRGBB()
                 res.observe(this, { list ->
                     red.progress = list?.get(0) as Int
