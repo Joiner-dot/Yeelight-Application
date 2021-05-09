@@ -1,6 +1,5 @@
 package com.example.yeelightapp.ui
 
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
 import com.example.yeelightapp.lamps.LampDst
-import com.example.yeelightapp.ui.viewmodel.LampViewModel
 
 
 class ListAdapter(_context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
@@ -40,7 +38,7 @@ class ListAdapter(_context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHo
         name.setOnClickListener {
             val args = Bundle()
             args.putString("IP", currentLamp.ip)
-            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_static1, args)
+            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args)
                 .onClick(name)
         }
     }

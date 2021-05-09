@@ -12,13 +12,26 @@
         tools:layout="@layout/list_fragments">
         <action
             android:id="@+id/action_listFragments_to_addLamp"
-            app:destination="@id/addLamp" />
+            app:destination="@id/addLamp"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/fade_out"/>
+
         <action
             android:id="@+id/action_listFragments_self"
-            app:destination="@id/listFragments" />
+            app:destination="@id/listFragments"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/slide_in" />
         <action
-            android:id="@+id/action_listFragments_to_static1"
-            app:destination="@id/static1" />
+            android:id="@+id/action_listFragments_to_mainMenu"
+            app:destination="@id/mainMenu"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/addLamp"
@@ -27,11 +40,28 @@
         tools:layout="@layout/add_lamp">
         <action
             android:id="@+id/action_addLamp_to_listFragments"
-            app:destination="@id/listFragments" />
+            app:destination="@id/listFragments"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/static1"
         android:name="com.example.yeelightapp.ui.fragments.Static"
         android:label="fragment_static"
         tools:layout="@layout/fragment_static" />
+    <fragment
+        android:id="@+id/mainMenu"
+        android:name="com.example.yeelightapp.MainMenu"
+        android:label="main_menu"
+        tools:layout="@layout/main_menu" >
+        <action
+            android:id="@+id/action_mainMenu_to_static1"
+            app:destination="@id/static1"
+            app:exitAnim="@anim/fade_out"
+            app:enterAnim="@anim/slide_in"
+            app:popEnterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
 </navigation>
