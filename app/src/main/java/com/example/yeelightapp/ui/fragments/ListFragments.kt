@@ -1,6 +1,7 @@
 package com.example.yeelightapp.ui.fragments
 
 import android.app.ActionBar
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
 import com.example.yeelightapp.di.appModule
+import com.example.yeelightapp.lamps.LampDst
 import com.example.yeelightapp.ui.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,10 +43,11 @@ class ListFragments : Fragment() {
         val adapter = ListAdapter(requireContext())
         recycle.adapter = adapter
         mLampViewModel.readAllData.observe(viewLifecycleOwner, { lamps ->
+            for (i in lamps){
+                Log.d("Taaag", i.name)
+            }
             recycle.removeAllViews()
             adapter.setData(lamps)
-            Log.d("Tag", adapter.lampList.toString())
-
         })
         button.setOnClickListener {
             findNavController().navigate(R.id.action_listFragments_to_addLamp)

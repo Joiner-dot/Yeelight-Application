@@ -1,8 +1,8 @@
-package com.example.yeelightapp.database.api
+package com.example.yeelightapp.data.api
 
 import android.graphics.Color
 import android.util.Log
-import com.example.yeelightapp.database.api.interfaces.IYeelightAPI
+import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.lamps.Property
 import com.google.gson.Gson
 import java.io.BufferedOutputStream
@@ -13,11 +13,11 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 
-class YeelightAPI : IYeelightAPI {
+class YeelightAPIImpl : YeelightAPI {
     private lateinit var mBos: BufferedOutputStream
     private lateinit var mReader: BufferedReader
 
-    override suspend fun connect(ip: String): Boolean {
+    override suspend fun connect(ip: String):Boolean {
         try {
             val mSocket = Socket()
             mSocket.connect(InetSocketAddress(ip, 55443), 2000)

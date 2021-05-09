@@ -10,7 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
-import com.example.yeelightapp.database.datasource.Lamp
+import com.example.yeelightapp.lamps.LampDst
+import com.example.yeelightapp.lamps.LampSrc
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import org.koin.android.ext.android.get
 
@@ -40,7 +41,7 @@ class AddLamp : Fragment() {
         val ip = view?.findViewById<TextView>(R.id.idNewLamp)?.text
 
         if (inputCheck(name.toString(), ip.toString())) {
-            val lamp = Lamp(0, name.toString(), ip.toString())
+            val lamp = LampDst(name.toString(), ip.toString())
             mLampViewModel.addLamp(lamp)
             Toast.makeText(
                 requireContext(),
