@@ -10,7 +10,7 @@ import com.example.yeelightapp.lamps.LampSrc
 @Database(entities = [LampSrc::class], version = 1, exportSchema = false)
 abstract class LampDataBase : RoomDatabase() {
 
-    abstract fun lammpDAO(): LampDB
+    abstract fun lampDAO(): LampDB
 
     companion object {
         @Volatile
@@ -23,13 +23,13 @@ abstract class LampDataBase : RoomDatabase() {
             }
 
             synchronized(this) {
-                val instane = Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     LampDataBase::class.java,
                     "lamps"
                 ).build()
-                INSTANCE = instane
-                return instane
+                INSTANCE = instance
+                return instance
             }
         }
     }

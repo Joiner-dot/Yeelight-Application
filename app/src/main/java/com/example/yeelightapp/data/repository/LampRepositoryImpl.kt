@@ -15,6 +15,10 @@ class LampRepositoryImpl(private val lampDAO: DataBase, private val yeelightAPI:
         lampDAO.insertNewLamp(lamp)
     }
 
+    override suspend fun deleteByNameAndIp(name: String, ip: String) {
+        lampDAO.deleteByNameAndIp(name, ip)
+    }
+
     override suspend fun deleteLamp(lamp: LampSrc) {
         lampDAO.deleteLamp(lamp)
     }

@@ -13,12 +13,12 @@ import kotlinx.coroutines.launch
 
 class LampViewModel(application: Application) : ViewModel() {
 
-    val readAllData: LiveData<List<LampDst>>
+    val readAllData: LiveData<ArrayList<LampDst>>
     private val repositoryImpl: LampRepository
     private val lampMapper: LampMapper = LampMapper()
 
     init {
-        val lampDao = LampDataBase.getDatabase(application).lammpDAO()
+        val lampDao = LampDataBase.getDatabase(application).lampDAO()
         repositoryImpl = LampRepositoryImpl(lampDao, YeelightAPIImpl())
         readAllData = lampMapper.transform(repositoryImpl.readAllData)
     }
@@ -29,9 +29,10 @@ class LampViewModel(application: Application) : ViewModel() {
         }
     }
 
-    fun deleteLamp(lamp: LampDst) {
+
+    fun deleteLamp(name: String, ip: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.deleteLamp(lampMapper.reverseTransform(lamp))
+            repositoryImpl.deleteByNameAndIp(name, ip)
         }
     }
 

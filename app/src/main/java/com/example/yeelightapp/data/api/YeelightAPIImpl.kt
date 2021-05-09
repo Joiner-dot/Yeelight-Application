@@ -60,7 +60,6 @@ class YeelightAPIImpl : YeelightAPI {
 
     override suspend fun turnOn() {
         try {
-            Log.d("Button", "ON")
             mBos.write(("{\"id\":1,\"method\":\"set_power\",\"params\":[\"on\",\"smooth\",500]}\r\n").toByteArray())
             mBos.flush()
         } catch (e: Exception) {
@@ -71,7 +70,6 @@ class YeelightAPIImpl : YeelightAPI {
     override suspend fun turnOff() {
 
         try {
-            Log.d("Button", "OFF")
             mBos.write(("{\"id\":11,\"method\":\"set_power\",\"params\":[\"off\",\"smooth\",500]}\r\n").toByteArray())
             mBos.flush()
         } catch (e: Exception) {
@@ -95,7 +93,6 @@ class YeelightAPIImpl : YeelightAPI {
                 throw NullPointerException()
             }
             val list = arrayListOf<Any>()
-            Log.d("AAAAAAAAAA", value.toString())
             val gson = Gson().fromJson(value, Property::class.java)
             list.add(Color.red(gson.result[1].toInt()))
             list.add(Color.green(gson.result[1].toInt()))

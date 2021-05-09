@@ -10,6 +10,8 @@ interface LampRepository {
 
     suspend fun connect(ip: String): Boolean
 
+    suspend fun deleteByNameAndIp(name:String, ip:String)
+
     suspend fun setCurrentRGBB(): List<Any>
 
     suspend fun changeRGB(red: Int, green: Int, blue: Int)

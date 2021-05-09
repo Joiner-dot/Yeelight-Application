@@ -1,6 +1,7 @@
 package com.example.yeelightapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +15,12 @@ import com.example.yeelightapp.lamps.LampDst
 import com.example.yeelightapp.lamps.LampSrc
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddLamp : Fragment() {
 
-    private lateinit var mLampViewModel: LampViewModel
+    private val mLampViewModel: LampViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +29,6 @@ class AddLamp : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.add_lamp, container, false)
 
-        mLampViewModel = get()
         val select: Button = view.findViewById(R.id.select)
 
         select.setOnClickListener {
