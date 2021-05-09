@@ -13,6 +13,7 @@ import com.example.yeelightapp.R
 import com.example.yeelightapp.lamps.LampDst
 
 
+
 class ListAdapter(_context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var lampList = emptyList<LampDst>()
@@ -38,8 +39,7 @@ class ListAdapter(_context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHo
         name.setOnClickListener {
             val args = Bundle()
             args.putString("IP", currentLamp.ip)
-            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args)
-                .onClick(name)
+            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args).onClick(name)
         }
     }
 
