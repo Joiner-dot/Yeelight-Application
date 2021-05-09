@@ -1,5 +1,6 @@
 package com.example.yeelightapp.ui
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,19 +11,22 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
-import com.example.yeelightapp.database.datasource.Lamp
+import com.example.yeelightapp.lamps.LampDst
+import com.example.yeelightapp.ui.viewmodel.LampViewModel
 
 
 class ListAdapter(_context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    var lampList = emptyList<Lamp>()
-    val context = _context
+    private var lampList = emptyList<LampDst>()
+    private val context = _context
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_lamp, parent, false))
+        return MyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.row_lamp, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -36,11 +40,12 @@ class ListAdapter(_context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHo
         name.setOnClickListener {
             val args = Bundle()
             args.putString("IP", currentLamp.ip)
-            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_static1, args).onClick(name)
+            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_static1, args)
+                .onClick(name)
         }
     }
 
-    fun setData(lamps: List<Lamp>) {
+    fun setData(lamps: List<LampDst>) {
         this.lampList = lamps
         notifyDataSetChanged()
     }

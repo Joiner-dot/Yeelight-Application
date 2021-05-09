@@ -1,15 +1,16 @@
-package com.example.yeelightapp.database.datasource
+package com.example.yeelightapp.data.datasource.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.yeelightapp.database.dao.room.LampImpl
+import com.example.yeelightapp.data.dao.room.LampDB
+import com.example.yeelightapp.lamps.LampSrc
 
-@Database(entities = [Lamp::class], version = 1, exportSchema = false)
+@Database(entities = [LampSrc::class], version = 1, exportSchema = false)
 abstract class LampDataBase : RoomDatabase() {
 
-    abstract fun lammpDAO(): LampImpl
+    abstract fun lammpDAO(): LampDB
 
     companion object {
         @Volatile

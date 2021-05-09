@@ -1,6 +1,6 @@
-package com.example.yeelightapp.database.api.interfaces
+package com.example.yeelightapp.data.api.interfaces
 
-interface IYeelightAPI {
+interface YeelightAPI {
 
     suspend fun connect(ip: String): Boolean
 
