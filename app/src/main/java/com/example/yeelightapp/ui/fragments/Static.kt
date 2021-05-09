@@ -18,8 +18,8 @@ import org.koin.android.ext.android.startKoin
 class Static : Fragment() {
     lateinit var ip: String
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_static, container, false)
         val bundle = this.arguments
@@ -44,9 +44,9 @@ class Static : Fragment() {
         e.observe(this, { returned ->
             if (!returned) {
                 Toast.makeText(
-                        requireContext(),
-                        "Connection failed",
-                        Toast.LENGTH_LONG
+                    requireContext(),
+                    "Connection failed",
+                    Toast.LENGTH_LONG
                 ).show()
                 this@Static.activity?.onBackPressed()
             } else {

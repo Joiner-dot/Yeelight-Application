@@ -40,7 +40,7 @@ class ListFragments : Fragment() {
         recycle.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         val button: FloatingActionButton = view.findViewById(R.id.addButton)
         mLampViewModel = get()
-        val adapter = ListAdapter(requireContext())
+        val adapter = ListAdapter()
         recycle.adapter = adapter
         mLampViewModel.readAllData.observe(viewLifecycleOwner, { lamps ->
             for (i in lamps){

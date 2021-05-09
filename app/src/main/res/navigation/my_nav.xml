@@ -53,7 +53,7 @@
         tools:layout="@layout/fragment_static" />
     <fragment
         android:id="@+id/mainMenu"
-        android:name="com.example.yeelightapp.MainMenu"
+        android:name="com.example.yeelightapp.ui.fragments.MainMenu"
         android:label="main_menu"
         tools:layout="@layout/main_menu" >
         <action
