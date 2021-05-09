@@ -2,6 +2,7 @@ package com.example.yeelightapp.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ListFragments : Fragment() {
 
-    private val mLampViewModel:LampViewModel by viewModel()
+    private val mLampViewModel:LampViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +30,7 @@ class ListFragments : Fragment() {
         val view: View by lazy { inflater.inflate(R.layout.list_fragments, container, false) }
         val recycle: RecyclerView by lazy { view.findViewById(R.id.recyclefrag) }
         val button: FloatingActionButton by lazy { view.findViewById(R.id.addButton) }
-        val adapter: ListAdapter by lazy { ListAdapter(mLampViewModel) }
+        val adapter: ListAdapter by lazy { ListAdapter(mLampViewModel, view.context) }
         recycle.adapter = adapter
         if (requireActivity().currentFocus != null) {
             val inputManager =

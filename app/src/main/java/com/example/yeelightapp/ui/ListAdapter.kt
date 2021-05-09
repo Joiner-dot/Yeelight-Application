@@ -1,11 +1,12 @@
 package com.example.yeelightapp.ui
 
-import android.os.Bundle
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +15,14 @@ import com.example.yeelightapp.lamps.LampDst
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 
 
-class ListAdapter(viewModel: ViewModel) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(viewModel: ViewModel, context: Context) :
+    RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var lampList = arrayListOf<LampDst>()
 
     private val lampViewModel = viewModel
+
+    private val contextAdapter = context
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -36,10 +40,22 @@ class ListAdapter(viewModel: ViewModel) : RecyclerView.Adapter<ListAdapter.MyVie
         name.text = currentLamp.name
         name.isClickable = true
         name.setOnClickListener {
-            val args = Bundle()
-            args.putString("IP", currentLamp.ip)
-            Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args)
-                .onClick(name)
+            if (lampViewModel is LampViewModel) {
+                val e = lampViewModel.connect(currentLamp.ip)
+                e.observeForever { returned ->
+                    if (!returned) {
+                        Toast.makeText(
+                            contextAdapter,
+                            "Connection failed",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Navigation.createNavigateOnClickListener(
+                            R.id.action_listFragments_to_mainMenu
+                        ).onClick(name)
+                    }
+                }
+            }
         }
 
         name.setOnLongClickListener {

@@ -23,6 +23,7 @@ class LampViewModel(application: Application) : ViewModel() {
         readAllData = lampMapper.transform(repositoryImpl.readAllData)
     }
 
+
     fun addLamp(lamp: LampDst) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.addLamp(lampMapper.reverseTransform(lamp))
