@@ -12,5 +12,5 @@ interface YeelightAPI {
 
     suspend fun turnOff()
 
-    suspend fun setCurrentRGBB(): List<Any>
+    suspend fun setCurrentRGBB(ip: String): List<Any>
 }

@@ -34,6 +34,7 @@ class AddLamp : Fragment() {
         return view
     }
 
+
     private fun insertDataToDataBase() {
         val name = view?.findViewById<TextView>(R.id.nameOfNewLamp)?.text
         val ip = view?.findViewById<TextView>(R.id.idNewLamp)?.text

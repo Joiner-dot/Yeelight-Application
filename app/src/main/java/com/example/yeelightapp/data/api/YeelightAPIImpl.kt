@@ -5,6 +5,7 @@ import android.util.Log
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.lamps.Property
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -17,7 +18,7 @@ class YeelightAPIImpl : YeelightAPI {
     private lateinit var mBos: BufferedOutputStream
     private lateinit var mReader: BufferedReader
 
-    override suspend fun connect(ip: String):Boolean {
+    override suspend fun connect(ip: String): Boolean {
         try {
             val mSocket = Socket()
             mSocket.connect(InetSocketAddress(ip, 55443), 2000)
@@ -44,6 +45,8 @@ class YeelightAPIImpl : YeelightAPI {
                 "{\"id\":2,\"method\":\"set_rgb\",\"params\":[$color, \"smooth\", 500]}\r\n"
             mBos.write(newVal.toByteArray())
             mBos.flush()
+            mReader.readLine()
+            mReader.readLine()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
         }
@@ -53,6 +56,8 @@ class YeelightAPIImpl : YeelightAPI {
         try {
             mBos.write(("{\"id\":1,\"method\":\"set_bright\",\"params\":[$brightness, \"smooth\", 500]}\r\n").toByteArray())
             mBos.flush()
+            mReader.readLine()
+            mReader.readLine()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
         }
@@ -62,6 +67,8 @@ class YeelightAPIImpl : YeelightAPI {
         try {
             mBos.write(("{\"id\":1,\"method\":\"set_power\",\"params\":[\"on\",\"smooth\",500]}\r\n").toByteArray())
             mBos.flush()
+            mReader.readLine()
+            mReader.readLine()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
         }
@@ -72,21 +79,26 @@ class YeelightAPIImpl : YeelightAPI {
         try {
             mBos.write(("{\"id\":11,\"method\":\"set_power\",\"params\":[\"off\",\"smooth\",500]}\r\n").toByteArray())
             mBos.flush()
+            mReader.readLine()
+            mReader.readLine()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
         }
     }
 
-    override suspend fun setCurrentRGBB(): List<Any> {
-        var value: String?
+    override suspend fun setCurrentRGBB(ip: String): List<Any> {
+        var value: String? = null
         try {
             while (true) {
                 try {
                     mBos.write("{\"id\":5,\"method\":\"get_prop\",\"params\":[\"power\", \"rgb\", \"bright\"]}\r\n".toByteArray())
                     mBos.flush()
                     value = mReader.readLine()
-                    break
+                    if (value.toString() != "null") {
+                        break
+                    }
                 } catch (e: Exception) {
+                    connect(ip)
                 }
             }
             if (value.toString() == "null") {

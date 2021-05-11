@@ -1,6 +1,7 @@
 package com.example.yeelightapp.ui
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -50,14 +51,14 @@ class ListAdapter(viewModel: ViewModel, context: Context) :
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
-                        Navigation.createNavigateOnClickListener(
-                            R.id.action_listFragments_to_mainMenu
-                        ).onClick(name)
+                        val args = Bundle()
+                        args.putString("IP", currentLamp.ip)
+                        Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args)
+                            .onClick(name)
                     }
                 }
             }
         }
-
         name.setOnLongClickListener {
             try {
                 if (lampViewModel is LampViewModel) {

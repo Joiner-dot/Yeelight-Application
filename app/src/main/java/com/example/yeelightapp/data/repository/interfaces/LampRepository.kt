@@ -12,7 +12,7 @@ interface LampRepository {
 
     suspend fun deleteByNameAndIp(name:String, ip:String)
 
-    suspend fun setCurrentRGBB(): List<Any>
+    suspend fun setCurrentRGBB(ip: String): List<Any>
 
     suspend fun changeRGB(red: Int, green: Int, blue: Int)
 

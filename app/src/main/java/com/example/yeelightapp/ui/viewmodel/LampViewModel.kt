@@ -45,10 +45,10 @@ class LampViewModel(application: Application) : ViewModel() {
         return result
     }
 
-    fun setCurrentRGBB(): LiveData<List<Any>> {
+    fun setCurrentRGBB(ip: String): LiveData<List<Any>> {
         val result = MutableLiveData<List<Any>>()
         viewModelScope.launch(Dispatchers.IO) {
-            result.postValue(repositoryImpl.setCurrentRGBB())
+            result.postValue(repositoryImpl.setCurrentRGBB(ip))
         }
         return result
     }

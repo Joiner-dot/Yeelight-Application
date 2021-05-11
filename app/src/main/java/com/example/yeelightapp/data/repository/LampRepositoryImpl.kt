@@ -27,8 +27,8 @@ class LampRepositoryImpl(private val lampDAO: DataBase, private val yeelightAPI:
         return yeelightAPI.connect(ip)
     }
 
-    override suspend fun setCurrentRGBB(): List<Any> {
-        return yeelightAPI.setCurrentRGBB()
+    override suspend fun setCurrentRGBB(ip: String): List<Any> {
+        return yeelightAPI.setCurrentRGBB(ip)
     }
 
     override suspend fun changeRGB(red: Int, green: Int, blue: Int) {

@@ -6,18 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import com.example.yeelightapp.R
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 class Static : Fragment() {
+    private val viewModel: LampViewModel by inject()
+    private lateinit var ip: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_static, container, false)
+        val view = inflater.inflate(R.layout.fragment_static, container, false)
+        val bundle = this.arguments
+        ip = bundle?.getString("IP").toString()
+        return view
     }
 
     override fun onResume() {
@@ -27,8 +34,7 @@ class Static : Fragment() {
         val blue: SeekBar by lazy { requireView().findViewById(R.id.blue2) }
         val brightness: SeekBar by lazy { requireView().findViewById(R.id.brightness2) }
         val onOff: ToggleButton by lazy { requireView().findViewById(R.id.onOff2) }
-        val viewModel: LampViewModel = get()
-        val res = viewModel.setCurrentRGBB()
+        val res = viewModel.setCurrentRGBB(ip)
         res.observe(this, { list ->
             red.progress = list?.get(0) as Int
             green.progress = list[1] as Int
