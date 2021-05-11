@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.example.yeelightapp.R
 import com.example.yeelightapp.di.appModule
-import org.koin.android.ext.android.startKoin
-import org.koin.standalone.StandAloneContext.loadKoinModules
-import org.koin.standalone.StandAloneContext.stopKoin
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +18,9 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startKoin(applicationContext, listOf(appModule))
+        startKoin {
+            modules(appModule)
+        }
     }
 
     override fun onDestroy() {

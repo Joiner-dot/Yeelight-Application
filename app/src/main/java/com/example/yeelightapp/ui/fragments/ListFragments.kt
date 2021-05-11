@@ -16,7 +16,6 @@ import com.example.yeelightapp.ui.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class ListFragments : Fragment() {
