@@ -30,6 +30,29 @@ class LampViewModel(application: Application) : ViewModel() {
         }
     }
 
+    fun nightMode(){
+        viewModelScope.launch(Dispatchers.Default) {
+            repositoryImpl.nightMode()
+        }
+    }
+
+    fun workMode(){
+        viewModelScope.launch(Dispatchers.Default) {
+            repositoryImpl.workMode()
+        }
+    }
+
+    fun partyMode(){
+        viewModelScope.launch(Dispatchers.Default) {
+            repositoryImpl.partyMode()
+        }
+    }
+
+    fun romanticMode(){
+        viewModelScope.launch(Dispatchers.Default) {
+            repositoryImpl.romanticMode()
+        }
+    }
 
     fun deleteLamp(name: String, ip: String) {
         viewModelScope.launch(Dispatchers.IO) {

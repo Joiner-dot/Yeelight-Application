@@ -79,4 +79,5 @@ class Static : Fragment() {
             }
         })
     }
+
 }

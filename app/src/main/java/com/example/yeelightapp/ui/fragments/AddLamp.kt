@@ -22,7 +22,6 @@ class AddLamp : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.add_lamp, container, false)
 
         val select: Button = view.findViewById(R.id.select)

@@ -53,6 +53,7 @@ class ListAdapter(viewModel: ViewModel, context: Context) :
                     } else {
                         val args = Bundle()
                         args.putString("IP", currentLamp.ip)
+                        args.putString("NAME", currentLamp.name)
                         Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args)
                             .onClick(name)
                     }

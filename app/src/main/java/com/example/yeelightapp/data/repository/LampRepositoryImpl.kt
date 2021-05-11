@@ -46,4 +46,20 @@ class LampRepositoryImpl(private val lampDAO: DataBase, private val yeelightAPI:
     override suspend fun turnOff() {
         yeelightAPI.turnOff()
     }
+
+    override suspend fun nightMode() {
+        yeelightAPI.nightMode()
+    }
+
+    override suspend fun workMode() {
+        yeelightAPI.workMode()
+    }
+
+    override suspend fun partyMode() {
+        yeelightAPI.partyMode()
+    }
+
+    override suspend fun romanticMode() {
+        yeelightAPI.romanticMode()
+    }
 }

@@ -15,12 +15,12 @@ import org.koin.core.context.stopKoin
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportActionBar!!.hide();
+        supportActionBar!!.hide()
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         startKoin {
             androidContext(applicationContext)
             modules(appModule)
         }
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }

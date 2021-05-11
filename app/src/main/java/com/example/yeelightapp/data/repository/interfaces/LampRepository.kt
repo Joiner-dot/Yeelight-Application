@@ -21,4 +21,12 @@ interface LampRepository {
     suspend fun turnOn()
 
     suspend fun turnOff()
+
+    suspend fun nightMode()
+
+    suspend fun workMode()
+
+    suspend fun partyMode()
+
+    suspend fun romanticMode()
 }

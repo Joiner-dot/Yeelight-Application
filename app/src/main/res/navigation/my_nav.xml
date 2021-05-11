@@ -63,5 +63,17 @@
             app:enterAnim="@anim/slide_in"
             app:popEnterAnim="@anim/slide_out"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_mainMenu_to_modes"
+            app:destination="@id/modes"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
+    <fragment
+        android:id="@+id/modes"
+        android:name="com.example.yeelightapp.ui.fragments.Modes"
+        android:label="modes_page"
+        tools:layout="@layout/modes_page" />
 </navigation>

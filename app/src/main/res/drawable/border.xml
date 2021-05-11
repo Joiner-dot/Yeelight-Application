@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/cardview_dark_background">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:width="2dp" android:color="#6A479C" />
+            <solid android:width="2dp" android:color="#BA6CFF" />
             <corners android:radius="10dp" />
         </shape>
     </item>
-</selector>
+</ripple>
