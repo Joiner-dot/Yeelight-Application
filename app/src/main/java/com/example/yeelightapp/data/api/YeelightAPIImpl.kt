@@ -3,7 +3,10 @@ package com.example.yeelightapp.data.api
 import android.graphics.Color
 import android.util.Log
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
-import com.example.yeelightapp.lamps.Property
+import com.example.yeelightapp.data.api.enums.Modes
+import com.example.yeelightapp.lamps.PropertyForUI
+import com.example.yeelightapp.lamps.PropertyFromCommand
+import com.example.yeelightapp.lamps.SetCommandClass
 import com.google.gson.Gson
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
@@ -17,127 +20,126 @@ import java.net.SocketTimeoutException
 class YeelightAPIImpl : YeelightAPI {
     private lateinit var mBos: BufferedOutputStream
     private lateinit var mReader: BufferedReader
+    private val gson = Gson()
 
-    override suspend fun connect(ip: String): Boolean {
-        try {
-            val mSocket = Socket()
-            mSocket.connect(InetSocketAddress(ip, 55443), 2000)
-            if (!mSocket.isConnected) {
-                throw SocketTimeoutException()
-            }
-            mSocket.keepAlive = true
-            mBos = BufferedOutputStream(mSocket.getOutputStream())
-            mReader = BufferedReader(InputStreamReader(mSocket!!.getInputStream()))
-        } catch (e: SocketTimeoutException) {
-            Log.d("Socket", e.printStackTrace().toString())
-            return false
-        } catch (e: SocketException) {
-            connect(ip)
-        } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
-            return false
+    override suspend fun connect(ip: String) {
+        val mSocket = Socket()
+        mSocket.connect(InetSocketAddress(ip, 55443), 2000)
+        if (!mSocket.isConnected) {
+            throw SocketTimeoutException()
         }
-        return true
+        mSocket.keepAlive = true
+        mBos = BufferedOutputStream(mSocket.getOutputStream())
+        mReader = BufferedReader(InputStreamReader(mSocket!!.getInputStream()))
     }
 
     override suspend fun changeRGB(red: Int, green: Int, blue: Int) {
-        try {
-            val color = (red * 65536) + (green * 256) + blue
-            val newVal =
-                "{\"id\":2,\"method\":\"set_rgb\",\"params\":[$color, \"smooth\", 500]}\r\n"
-            mBos.write(newVal.toByteArray())
-            mBos.flush()
-        } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
-        }
+        val color = (red * 65536) + (green * 256) + blue
+        val jsonString = gson.toJson(
+            SetCommandClass(
+                1,
+                "set_rgb",
+                listOf(color, "smooth", 500)
+            )
+        ) + "\r\n"
+        printToTheLamp(jsonString)
     }
 
     override suspend fun changeBrightness(brightness: Int) {
-        try {
-            mBos.write(("{\"id\":1,\"method\":\"set_bright\",\"params\":[$brightness, \"smooth\", 500]}\r\n").toByteArray())
-            mBos.flush()
-        } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
-        }
+        val jsonString = gson.toJson(
+            SetCommandClass(
+                1,
+                "set_bright",
+                listOf(brightness, "smooth", 500)
+            )
+        ) + "\r\n"
+        printToTheLamp(jsonString)
     }
 
     override suspend fun turnOn() {
-        try {
-            mBos.write(("{\"id\":1,\"method\":\"set_power\",\"params\":[\"on\",\"smooth\",500]}\r\n").toByteArray())
-            mBos.flush()
-        } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
-        }
+        val jsonString = gson.toJson(
+            SetCommandClass(
+                1,
+                "set_power",
+                listOf("on", "smooth", 500)
+            )
+        ) + "\r\n"
+        printToTheLamp(jsonString)
     }
 
     override suspend fun turnOff() {
+        val jsonString = gson.toJson(
+            SetCommandClass(
+                1,
+                "set_power",
+                listOf("off", "smooth", 500)
+            )
+        ) + "\r\n"
+        printToTheLamp(jsonString)
 
-        try {
-            mBos.write(("{\"id\":11,\"method\":\"set_power\",\"params\":[\"off\",\"smooth\",500]}\r\n").toByteArray())
-            mBos.flush()
-        } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
-        }
     }
 
     override suspend fun nightMode() {
-        mBos.write(("{\"id\":1, \"method\":\"set_scene\",\"params\":[\"cf\",0,0,\"5000,1,16755200,1,5000,1,16744960,1\"]}\r\n").toByteArray())
-        mBos.flush()
+        printToTheLamp(Modes.Night.command)
+
     }
 
     override suspend fun workMode() {
-        mBos.write(("{\"id\":1, \"method\":\"set_scene\",\"params\":[\"cf\",0,0,\"5000,1,16777215,60,15000,1,16760480,40\"]}\r\n").toByteArray())
-        mBos.flush()
+        printToTheLamp(Modes.Work.command)
+
     }
 
     override suspend fun partyMode() {
-        mBos.write(("{\"id\":1, \"method\":\"set_scene\",\"params\":[\"cf\",0,0,\"2000,1,16711680,80,2000,1,16755200,80,2000," +
-                "1,65280,80,2000,1,65535,80,2000,1,16711935,80,2000,1,255,80\"]}\r\n").toByteArray())
-        mBos.flush()
+        printToTheLamp(Modes.Party.command)
+
     }
 
     override suspend fun romanticMode() {
-        mBos.write(("{\"id\":1, \"method\":\"set_scene\",\"params\":[\"cf\",0,0,\"2000,1,16711870,60,800,1,11141375,40\"]}\r\n").toByteArray())
-        mBos.flush()
+        printToTheLamp(Modes.Romantic.command)
+
     }
 
-    override suspend fun setCurrentRGBB(ip: String): List<Any> {
-        var value: String?
+    override suspend fun setCurrentRGBB(ip: String): PropertyForUI {
+        val value: String?
         var currentLine: String
-        try {
+        val propertyFromCommand: PropertyFromCommand
+        val propertyForUI: PropertyForUI
+        val jsonString = gson.toJson(
+            SetCommandClass(
+                1,
+                "get_prop",
+                listOf("power", "rgb", "bright")
+            )
+        ) + "\r\n"
+        while (true) {
+            printToTheLamp(jsonString)
             while (true) {
-                try {
-                    mBos.write("{\"id\":5,\"method\":\"get_prop\",\"params\":[\"power\", \"rgb\", \"bright\"]}\r\n".toByteArray())
-                    mBos.flush()
-                    while (true) {
-                        currentLine = mReader.readLine()
-                        if (currentLine.contains("result")
-                            && (currentLine.contains("on")
-                                    || currentLine.contains("off"))
-                        ) {
-                            value = currentLine
-                            break
-                        }
-                    }
+                currentLine = mReader.readLine()
+                if (currentLine.contains("result")
+                    && (currentLine.contains("on")
+                            || currentLine.contains("off"))
+                ) {
+                    value = currentLine
                     break
-                } catch (e: Exception) {
-                    connect(ip)
                 }
             }
-            if (value.toString() == "null") {
-                throw NullPointerException()
-            }
-            val list = arrayListOf<Any>()
-            val gson = Gson().fromJson(value, Property::class.java)
-            list.add(Color.red(gson.result[1].toInt()))
-            list.add(Color.green(gson.result[1].toInt()))
-            list.add(Color.blue(gson.result[1].toInt()))
-            list.add(gson.result[2].toInt())
-            list.add(gson.result[0])
-            return list
-        } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            break
         }
-        return (arrayListOf(0, 0, 0, 0, "off"))
+        propertyFromCommand = Gson().fromJson(value, PropertyFromCommand::class.java)
+        propertyForUI = PropertyForUI(
+            Color.red(propertyFromCommand.result[1].toInt()),
+            Color.green(propertyFromCommand.result[1].toInt()),
+            Color.blue(propertyFromCommand.result[1].toInt()),
+            propertyFromCommand.result[2].toInt(),
+            propertyFromCommand.result[0]
+        )
+        return propertyForUI
+    }
+
+    private fun printToTheLamp(command: String) {
+        mBos.apply {
+            write((command).toByteArray())
+            flush()
+        }
     }
 }

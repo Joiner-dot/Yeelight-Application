@@ -1,19 +1,23 @@
 package com.example.yeelightapp.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.yeelightapp.data.api.YeelightAPIImpl
 import com.example.yeelightapp.data.datasource.room.LampDataBase
 import com.example.yeelightapp.data.repository.LampRepositoryImpl
 import com.example.yeelightapp.data.repository.interfaces.LampRepository
-import com.example.yeelightapp.lamps.LampDst
+import com.example.yeelightapp.lamps.LampForUI
+import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.mapper.LampMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.SocketException
+import java.net.SocketTimeoutException
 
 class LampViewModel(application: Application) : ViewModel() {
 
-    val readAllData: LiveData<ArrayList<LampDst>>
+    val readAllData: LiveData<ArrayList<LampForUI>>
     private val repositoryImpl: LampRepository
     private val lampMapper: LampMapper = LampMapper()
 
@@ -24,52 +28,45 @@ class LampViewModel(application: Application) : ViewModel() {
     }
 
 
-    fun addLamp(lamp: LampDst) {
+    fun addLamp(lamp: LampForUI) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.addLamp(lampMapper.reverseTransform(lamp))
         }
     }
 
-    fun nightMode(){
+    fun turnMode(mode:String) {
         viewModelScope.launch(Dispatchers.Default) {
-            repositoryImpl.nightMode()
+            repositoryImpl.turnMode(mode)
         }
     }
 
-    fun workMode(){
-        viewModelScope.launch(Dispatchers.Default) {
-            repositoryImpl.workMode()
-        }
-    }
-
-    fun partyMode(){
-        viewModelScope.launch(Dispatchers.Default) {
-            repositoryImpl.partyMode()
-        }
-    }
-
-    fun romanticMode(){
-        viewModelScope.launch(Dispatchers.Default) {
-            repositoryImpl.romanticMode()
-        }
-    }
-
-    fun deleteLamp(name: String, ip: String) {
+    fun deleteLamp(id:Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.deleteByNameAndIp(name, ip)
+            repositoryImpl.deleteLamp(id)
         }
     }
 
     fun connect(ip: String): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.IO) {
-            result.postValue(repositoryImpl.connect(ip))
+            try {
+                repositoryImpl.connect(ip)
+                result.postValue(true)
+            } catch (e: SocketTimeoutException) {
+                Log.d("Socket", e.printStackTrace().toString())
+                result.postValue(false)
+            } catch (e: SocketException) {
+                connect(ip)
+            } catch (e: Exception) {
+                Log.d("Exception", e.printStackTrace().toString())
+                result.postValue(false)
+            }
         }
         return result
     }
 
-    fun setCurrentRGBB(ip: String): LiveData<List<Any>> {
-        val result = MutableLiveData<List<Any>>()
+    fun setCurrentRGBB(ip: String): LiveData<PropertyForUI> {
+        val result = MutableLiveData<PropertyForUI>()
         viewModelScope.launch(Dispatchers.IO) {
             result.postValue(repositoryImpl.setCurrentRGBB(ip))
         }

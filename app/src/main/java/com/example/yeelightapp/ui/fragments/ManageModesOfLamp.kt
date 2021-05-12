@@ -12,28 +12,25 @@ import com.example.yeelightapp.R
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import org.koin.android.ext.android.inject
 
-class Modes : Fragment() {
+class ManageModesOfLamp : Fragment() {
 
     private val lampViewModel: LampViewModel by inject()
-    private lateinit var ip: String
+    private val ip: String = this.arguments?.getString("IP").toString()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.modes_page, container, false)
-        val bundle = this.arguments
-        ip = bundle?.getString("IP").toString()
-        return view
+        return inflater.inflate(R.layout.modes_page, container, false)
     }
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onResume() {
         super.onResume()
-        val onOff:Switch by lazy { requireView().findViewById(R.id.onOffMode) }
+        val onOff: Switch by lazy { requireView().findViewById(R.id.onOffMode) }
         val res = lampViewModel.setCurrentRGBB(ip)
         res.observe(this, { list ->
             onOff.setOnCheckedChangeListener(null)
-            onOff.isChecked = (list[4].toString()) == "on"
+            onOff.isChecked = (list.power) == "on"
             onOff.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     lampViewModel.turnOn()
@@ -42,21 +39,21 @@ class Modes : Fragment() {
                 }
             }
         })
-        val nightMode: Button by lazy { requireView().findViewById(R.id.nightMode) }
-        val workMode: Button by lazy { requireView().findViewById(R.id.workMode) }
-        val partyMode: Button by lazy { requireView().findViewById(R.id.partyMode) }
-        val romanticMode: Button by lazy { requireView().findViewById(R.id.romanticMode) }
+        val nightMode: Button = requireView().findViewById(R.id.nightMode)
+        val workMode: Button = requireView().findViewById(R.id.workMode)
+        val partyMode: Button = requireView().findViewById(R.id.partyMode)
+        val romanticMode: Button = requireView().findViewById(R.id.romanticMode)
         nightMode.setOnClickListener {
-            lampViewModel.nightMode()
+            lampViewModel.turnMode("Night")
         }
         workMode.setOnClickListener {
-            lampViewModel.workMode()
+            lampViewModel.turnMode("Work")
         }
         partyMode.setOnClickListener {
-            lampViewModel.partyMode()
+            lampViewModel.turnMode("Party")
         }
         romanticMode.setOnClickListener {
-            lampViewModel.romanticMode()
+            lampViewModel.turnMode("Romantic")
         }
     }
 }

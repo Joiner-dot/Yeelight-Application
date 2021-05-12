@@ -1,24 +1,23 @@
 package com.example.yeelightapp.mapper
 
-import android.util.Log
+import androidx.arch.core.util.Function
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.yeelightapp.lamps.LampDst
-import com.example.yeelightapp.lamps.LampSrc
+import androidx.lifecycle.Transformations
+import com.example.yeelightapp.lamps.LampForUI
+import com.example.yeelightapp.lamps.LampFromDB
 
-class LampMapper : Mapper<LampSrc, LampDst> {
-    override fun transform(data: LiveData<List<LampSrc>>): LiveData<ArrayList<LampDst>> {
-        val list = arrayListOf<LampDst>()
-        val values = MutableLiveData<ArrayList<LampDst>>()
-        data.observeForever {
-            list.clear()
-            for (i in it) {
-                list.add(LampDst(i.name, i.ip))
-            }
-            values.postValue(list)
-        }
-        return values
+class LampMapper {
+    fun transform(data: LiveData<List<LampFromDB>>): LiveData<ArrayList<LampForUI>> {
+        return Transformations.map(data,
+            Function {
+                val list = arrayListOf<LampForUI>()
+                list.clear()
+                for (i in it) {
+                    list.add(LampForUI(i.id, i.name, i.ip))
+                }
+                return@Function list
+            })
     }
 
-    override fun reverseTransform(data: LampDst): LampSrc = LampSrc(0, data.name, data.ip)
+    fun reverseTransform(data: LampForUI): LampFromDB = LampFromDB(0, data.name, data.ip)
 }

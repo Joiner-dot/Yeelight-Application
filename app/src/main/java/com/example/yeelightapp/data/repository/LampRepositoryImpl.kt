@@ -1,33 +1,31 @@
 package com.example.yeelightapp.data.repository
 
 import androidx.lifecycle.LiveData
-import com.example.yeelightapp.data.api.YeelightAPIImpl
+import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.data.dao.DataBase
-import com.example.yeelightapp.lamps.LampSrc
 import com.example.yeelightapp.data.repository.interfaces.LampRepository
+import com.example.yeelightapp.lamps.LampFromDB
+import com.example.yeelightapp.lamps.PropertyForUI
 
-class LampRepositoryImpl(private val lampDAO: DataBase, private val yeelightAPI: YeelightAPIImpl) :
+
+class LampRepositoryImpl(private val lampDAO: DataBase, private val yeelightAPI: YeelightAPI) :
     LampRepository {
 
-    val readAllData: LiveData<List<LampSrc>> = lampDAO.selectAllLamps()
+    val readAllData: LiveData<List<LampFromDB>> = lampDAO.selectAllLamps()
 
-    override suspend fun addLamp(lamp: LampSrc) {
+    override suspend fun addLamp(lamp: LampFromDB) {
         lampDAO.insertNewLamp(lamp)
     }
 
-    override suspend fun deleteByNameAndIp(name: String, ip: String) {
-        lampDAO.deleteByNameAndIp(name, ip)
+    override suspend fun deleteLamp(id:Int) {
+        lampDAO.deleteByNameAndIp(id)
     }
 
-    override suspend fun deleteLamp(lamp: LampSrc) {
-        lampDAO.deleteLamp(lamp)
-    }
-
-    override suspend fun connect(ip: String): Boolean {
+    override suspend fun connect(ip: String) {
         return yeelightAPI.connect(ip)
     }
 
-    override suspend fun setCurrentRGBB(ip: String): List<Any> {
+    override suspend fun setCurrentRGBB(ip: String): PropertyForUI {
         return yeelightAPI.setCurrentRGBB(ip)
     }
 
@@ -47,19 +45,12 @@ class LampRepositoryImpl(private val lampDAO: DataBase, private val yeelightAPI:
         yeelightAPI.turnOff()
     }
 
-    override suspend fun nightMode() {
-        yeelightAPI.nightMode()
-    }
-
-    override suspend fun workMode() {
-        yeelightAPI.workMode()
-    }
-
-    override suspend fun partyMode() {
-        yeelightAPI.partyMode()
-    }
-
-    override suspend fun romanticMode() {
-        yeelightAPI.romanticMode()
+    override suspend fun turnMode(mode: String) {
+        when(mode){
+            "Night" -> yeelightAPI.nightMode()
+            "Work" -> yeelightAPI.workMode()
+            "Party" -> yeelightAPI.partyMode()
+            "Romantic" -> yeelightAPI.romanticMode()
+        }
     }
 }

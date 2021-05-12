@@ -1,8 +1,10 @@
 package com.example.yeelightapp.data.api.interfaces
 
+import com.example.yeelightapp.lamps.PropertyForUI
+
 interface YeelightAPI {
 
-    suspend fun connect(ip: String): Boolean
+    suspend fun connect(ip: String)
 
     suspend fun changeRGB(red: Int, green: Int, blue: Int)
 
@@ -12,7 +14,7 @@ interface YeelightAPI {
 
     suspend fun turnOff()
 
-    suspend fun setCurrentRGBB(ip: String): List<Any>
+    suspend fun setCurrentRGBB(ip: String): PropertyForUI
 
     suspend fun nightMode()
 

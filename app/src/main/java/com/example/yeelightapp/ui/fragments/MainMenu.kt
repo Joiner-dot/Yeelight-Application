@@ -10,8 +10,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
-import com.example.yeelightapp.ui.viewmodel.LampViewModel
-import org.koin.android.ext.android.inject
 
 class MainMenu : Fragment() {
 
@@ -22,12 +20,11 @@ class MainMenu : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.main_menu, container, false)
-        val staticButton:Button by lazy { view.findViewById(R.id.staticbutton) }
-        val modesButton:Button by lazy { view.findViewById(R.id.modesButton) }
-        val welcomeMainMenu:TextView by lazy { view.findViewById(R.id.welcomeMainMenu) }
-        val bundle = this.arguments
-        val ip = bundle?.getString("IP").toString()
-        val name = bundle?.getString("NAME").toString()
+        val staticButton:Button = view.findViewById(R.id.staticbutton)
+        val modesButton:Button = view.findViewById(R.id.modesButton)
+        val welcomeMainMenu:TextView = view.findViewById(R.id.welcomeMainMenu)
+        val ip = this.arguments?.getString("IP").toString()
+        val name = this.arguments?.getString("NAME").toString()
         welcomeMainMenu.text = "Welcome to the $name"
 
         staticButton.setOnClickListener {

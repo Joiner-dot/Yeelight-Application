@@ -1,29 +1,20 @@
 package com.example.yeelightapp.ui
 
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
-import com.example.yeelightapp.lamps.LampDst
-import com.example.yeelightapp.ui.viewmodel.LampViewModel
+import com.example.yeelightapp.lamps.LampForUI
+import com.example.yeelightapp.ui.fragments.ListFragments
 
 
-class ListAdapter(viewModel: ViewModel, context: Context) :
+class ListAdapter(listFragments: ListFragments) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    private var lampList = arrayListOf<LampDst>()
-
-    private val lampViewModel = viewModel
-
-    private val contextAdapter = context
+    private var lampList = arrayListOf<LampForUI>()
+    private val listFragment = listFragments
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -35,44 +26,11 @@ class ListAdapter(viewModel: ViewModel, context: Context) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentLamp = lampList[position]
-        val name = holder.itemView.findViewById<TextView>(R.id.lampName)
-        val ip = holder.itemView.findViewById<TextView>(R.id.ipLamp)
-        ip.text = currentLamp.ip
-        name.text = currentLamp.name
-        name.isClickable = true
-        name.setOnClickListener {
-            if (lampViewModel is LampViewModel) {
-                val e = lampViewModel.connect(currentLamp.ip)
-                e.observeForever { returned ->
-                    if (!returned) {
-                        Toast.makeText(
-                            contextAdapter,
-                            "Connection failed",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        val args = Bundle()
-                        args.putString("IP", currentLamp.ip)
-                        args.putString("NAME", currentLamp.name)
-                        Navigation.createNavigateOnClickListener(R.id.action_listFragments_to_mainMenu, args)
-                            .onClick(name)
-                    }
-                }
-            }
-        }
-        name.setOnLongClickListener {
-            try {
-                if (lampViewModel is LampViewModel) {
-                    lampViewModel.deleteLamp(name.text.toString(), ip.text.toString())
-                }
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
-            }
-            return@setOnLongClickListener true
-        }
+        listFragment.processTheList(holder, currentLamp)
+
     }
 
-    fun setData(lamps: ArrayList<LampDst>) {
+    fun setData(lamps: ArrayList<LampForUI>) {
         var flag = false
         val index: Int
         if (lampList.size > lamps.size) {

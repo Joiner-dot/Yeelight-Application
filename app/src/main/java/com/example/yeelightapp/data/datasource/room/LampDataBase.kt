@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.yeelightapp.data.dao.room.LampDB
-import com.example.yeelightapp.lamps.LampSrc
+import com.example.yeelightapp.lamps.LampFromDB
 
-@Database(entities = [LampSrc::class], version = 1, exportSchema = false)
+@Database(entities = [LampFromDB::class], version = 1, exportSchema = false)
 abstract class LampDataBase : RoomDatabase() {
 
     abstract fun lampDAO(): LampDB

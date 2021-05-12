@@ -1,15 +1,13 @@
 package com.example.yeelightapp.data.dao
 
 import androidx.lifecycle.LiveData
-import com.example.yeelightapp.lamps.LampSrc
+import com.example.yeelightapp.lamps.LampFromDB
 
 interface DataBase {
 
-    suspend fun insertNewLamp(lamp: LampSrc)
+    suspend fun insertNewLamp(lamp: LampFromDB)
 
-    suspend fun deleteLamp(lamp: LampSrc)
+    fun selectAllLamps(): LiveData<List<LampFromDB>>
 
-    fun selectAllLamps(): LiveData<List<LampSrc>>
-
-    suspend fun deleteByNameAndIp(name: String, ip: String)
+    suspend fun deleteByNameAndIp(id:Int)
 }

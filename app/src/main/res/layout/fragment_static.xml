@@ -5,7 +5,7 @@
     android:id="@+id/contain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.Static">
+    tools:context=".ui.fragments.ManageStaticLight">
 
     <ImageView
         android:id="@+id/imageView"

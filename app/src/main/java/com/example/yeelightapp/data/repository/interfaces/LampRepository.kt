@@ -1,18 +1,18 @@
 package com.example.yeelightapp.data.repository.interfaces
 
-import com.example.yeelightapp.lamps.LampSrc
+import com.example.yeelightapp.lamps.LampFromDB
+import com.example.yeelightapp.lamps.PropertyForUI
+
 
 interface LampRepository {
 
-    suspend fun addLamp(lamp: LampSrc)
+    suspend fun addLamp(lamp: LampFromDB)
 
-    suspend fun deleteLamp(lamp: LampSrc)
+    suspend fun deleteLamp(id:Int)
 
-    suspend fun connect(ip: String): Boolean
+    suspend fun connect(ip: String)
 
-    suspend fun deleteByNameAndIp(name:String, ip:String)
-
-    suspend fun setCurrentRGBB(ip: String): List<Any>
+    suspend fun setCurrentRGBB(ip: String): PropertyForUI
 
     suspend fun changeRGB(red: Int, green: Int, blue: Int)
 
@@ -22,11 +22,5 @@ interface LampRepository {
 
     suspend fun turnOff()
 
-    suspend fun nightMode()
-
-    suspend fun workMode()
-
-    suspend fun partyMode()
-
-    suspend fun romanticMode()
+    suspend fun turnMode(mode:String)
 }
