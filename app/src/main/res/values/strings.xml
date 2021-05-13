@@ -21,4 +21,5 @@
     <string name="todo">TODO</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_enter_lamp_s_name_and_ip">Please, enter Lamp\'s name and IP</string>
 </resources>
