@@ -10,12 +10,12 @@ class LampMapper {
     fun transform(data: LiveData<List<LampFromDB>>): LiveData<ArrayList<LampForUI>> {
         return Transformations.map(data,
             Function {
-                val list = arrayListOf<LampForUI>()
-                list.clear()
+                val listResults = arrayListOf<LampForUI>()
+                listResults.clear()
                 for (i in it) {
-                    list.add(LampForUI(i.id, i.name, i.ip))
+                    listResults.add(LampForUI(i.id, i.name, i.ip))
                 }
-                return@Function list
+                return@Function listResults
             })
     }
 

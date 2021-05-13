@@ -14,6 +14,7 @@ import org.koin.android.ext.android.inject
 class ManageStaticLight : Fragment() {
     private val viewModel: LampViewModel by inject()
     private var ip: String = this.arguments?.getString("IP").toString()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

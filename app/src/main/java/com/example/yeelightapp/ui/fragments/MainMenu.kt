@@ -38,7 +38,6 @@ class MainMenu : Fragment() {
             args.putString("IP", ip)
             findNavController().navigate(R.id.action_mainMenu_to_modes, args)
         }
-
         return view
     }
 

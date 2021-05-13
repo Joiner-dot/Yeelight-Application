@@ -1,9 +1,8 @@
 package com.example.yeelightapp.data.api
 
 import android.graphics.Color
-import android.util.Log
-import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.data.api.enums.Modes
+import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.lamps.PropertyFromCommand
 import com.example.yeelightapp.lamps.SetCommandClass
@@ -13,7 +12,6 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.InetSocketAddress
 import java.net.Socket
-import java.net.SocketException
 import java.net.SocketTimeoutException
 
 
@@ -102,7 +100,6 @@ class YeelightAPIImpl : YeelightAPI {
     override suspend fun setCurrentRGBB(ip: String): PropertyForUI {
         val value: String?
         var currentLine: String
-        val propertyFromCommand: PropertyFromCommand
         val propertyForUI: PropertyForUI
         val jsonString = gson.toJson(
             SetCommandClass(
@@ -125,7 +122,7 @@ class YeelightAPIImpl : YeelightAPI {
             }
             break
         }
-        propertyFromCommand = Gson().fromJson(value, PropertyFromCommand::class.java)
+        val propertyFromCommand: PropertyFromCommand = Gson().fromJson(value, PropertyFromCommand::class.java)
         propertyForUI = PropertyForUI(
             Color.red(propertyFromCommand.result[1].toInt()),
             Color.green(propertyFromCommand.result[1].toInt()),

@@ -31,14 +31,13 @@ class AddLamp : Fragment() {
         select.setOnClickListener {
             insertDataToDataBase()
         }
-
         return view
     }
 
 
     private fun insertDataToDataBase() {
-        val name = view?.findViewById<TextView>(R.id.nameOfNewLamp)?.text
-        val ip = view?.findViewById<TextView>(R.id.idNewLamp)?.text
+        val nameForInsert = view?.findViewById<TextView>(R.id.nameOfNewLamp)?.text
+        val ipForInsert = view?.findViewById<TextView>(R.id.idNewLamp)?.text
 
         if (requireActivity().currentFocus != null) {
             val inputManager =
@@ -49,29 +48,26 @@ class AddLamp : Fragment() {
             )
         }
 
-        if (inputCheck(name.toString(), ip.toString())) {
-            val lamp = LampForUI(0, name.toString(), ip.toString())
+        if (inputCheck(nameForInsert.toString(), ipForInsert.toString())) {
+            val lamp = LampForUI(0, nameForInsert.toString(), ipForInsert.toString())
             mLampViewModel.addLamp(lamp)
             Toast.makeText(
                 requireContext(),
                 "New Lamp was added",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
             findNavController().navigate(R.id.action_addLamp_to_listFragments)
         } else {
             Toast.makeText(
                 requireContext(),
                 "Wrong data",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
         }
     }
 
     private fun inputCheck(name: String, ip: String): Boolean {
-
         return !(name == "" || ip == "" || ip.length <= 6)
-
-
     }
 
 }

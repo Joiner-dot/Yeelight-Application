@@ -28,9 +28,35 @@ class ManageModesOfLamp : Fragment() {
         super.onResume()
         val onOff: Switch by lazy { requireView().findViewById(R.id.onOffMode) }
         val res = lampViewModel.setCurrentRGBB(ip)
+        val nightMode: Button = requireView().findViewById(R.id.nightMode)
+        val workMode: Button = requireView().findViewById(R.id.workMode)
+        val partyMode: Button = requireView().findViewById(R.id.partyMode)
+        val romanticMode: Button = requireView().findViewById(R.id.romanticMode)
         res.observe(this, { list ->
+            turnSwitch(onOff, (list.power) == "on")
+        })
+        nightMode.setOnClickListener {
+            lampViewModel.turnMode("Night")
+            turnSwitch(onOff, true)
+        }
+        workMode.setOnClickListener {
+            lampViewModel.turnMode("Work")
+            turnSwitch(onOff, true)
+        }
+        partyMode.setOnClickListener {
+            lampViewModel.turnMode("Party")
+            turnSwitch(onOff, true)
+        }
+        romanticMode.setOnClickListener {
+            lampViewModel.turnMode("Romantic")
+            turnSwitch(onOff, true)
+        }
+    }
+
+    private fun turnSwitch(onOff: Switch, value: Boolean) {
+        if (!onOff.isChecked && value) {
             onOff.setOnCheckedChangeListener(null)
-            onOff.isChecked = (list.power) == "on"
+            onOff.isChecked = value
             onOff.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     lampViewModel.turnOn()
@@ -38,22 +64,6 @@ class ManageModesOfLamp : Fragment() {
                     lampViewModel.turnOff()
                 }
             }
-        })
-        val nightMode: Button = requireView().findViewById(R.id.nightMode)
-        val workMode: Button = requireView().findViewById(R.id.workMode)
-        val partyMode: Button = requireView().findViewById(R.id.partyMode)
-        val romanticMode: Button = requireView().findViewById(R.id.romanticMode)
-        nightMode.setOnClickListener {
-            lampViewModel.turnMode("Night")
-        }
-        workMode.setOnClickListener {
-            lampViewModel.turnMode("Work")
-        }
-        partyMode.setOnClickListener {
-            lampViewModel.turnMode("Party")
-        }
-        romanticMode.setOnClickListener {
-            lampViewModel.turnMode("Romantic")
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.yeelightapp.ui
+package com.example.yeelightapp.ui.adapter
 
 
 import android.view.LayoutInflater

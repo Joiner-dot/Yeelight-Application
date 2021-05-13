@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
 import com.example.yeelightapp.lamps.LampForUI
-import com.example.yeelightapp.ui.ListAdapter
+import com.example.yeelightapp.ui.adapter.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
@@ -29,7 +29,7 @@ class ListFragments : Fragment() {
     ): View {
         val view: View = inflater.inflate(R.layout.list_fragments, container, false)
         val recycle: RecyclerView = view.findViewById(R.id.recyclefrag)
-        val button: FloatingActionButton = view.findViewById(R.id.addButton)
+        val floatingActionButton: FloatingActionButton = view.findViewById(R.id.addButton)
         val adapter = ListAdapter(this)
         recycle.adapter = adapter
         recycle.layoutManager = LinearLayoutManager(
@@ -38,26 +38,26 @@ class ListFragments : Fragment() {
         mLampViewModel.readAllData.observe(viewLifecycleOwner, { lamps ->
             adapter.setData(lamps)
         })
-        button.setOnClickListener {
+        floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragments_to_addLamp)
         }
         return view
     }
 
     fun processTheList(holder: ListAdapter.MyViewHolder, currentLamp: LampForUI) {
-        val name = holder.itemView.findViewById<TextView>(R.id.lampName)
-        val ip = holder.itemView.findViewById<TextView>(R.id.ipLamp)
-        ip.text = currentLamp.ip
-        name.text = currentLamp.name
-        name.isClickable = true
-        name.setOnClickListener {
-            val e = mLampViewModel.connect(currentLamp.ip)
-            e.observe(this, { returned ->
+        val nameForRow = holder.itemView.findViewById<TextView>(R.id.lampName)
+        val ipForRow = holder.itemView.findViewById<TextView>(R.id.ipLamp)
+        ipForRow.text = currentLamp.ip
+        nameForRow.text = currentLamp.name
+        nameForRow.isClickable = true
+        nameForRow.setOnClickListener {
+            val connectValue = mLampViewModel.connect(currentLamp.ip)
+            connectValue.observe(this, { returned ->
                 if (!returned) {
                     Toast.makeText(
                         requireContext(),
                         "Connection failed",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     val args = Bundle()
@@ -70,7 +70,7 @@ class ListFragments : Fragment() {
                 }
             })
         }
-        name.setOnLongClickListener {
+        nameForRow.setOnLongClickListener {
             try {
                 mLampViewModel.deleteLamp(currentLamp.id)
             } catch (e: Exception) {
