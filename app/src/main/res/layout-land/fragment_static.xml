@@ -174,7 +174,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
-        android:layout_width="728dp"
+        android:layout_width="0dp"
         android:layout_height="51dp"
         app:backgroundTint="#4C4C4C"
         app:itemIconTint="@color/color_change_bottomview"

@@ -20,7 +20,11 @@
 
         <action
             android:id="@+id/action_listFragments_to_modes"
-            app:destination="@id/modes" />
+            app:destination="@id/modes"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"/>
     </fragment>
     <fragment
         android:id="@+id/addLamp"
