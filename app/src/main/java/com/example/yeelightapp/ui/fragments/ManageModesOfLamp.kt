@@ -43,6 +43,10 @@ class ManageModesOfLamp : Fragment() {
                     args.putString("IP", ip)
                     findNavController().navigate(R.id.action_modes_to_static1, args)
                 }
+                R.id.action_about -> {
+                    args.putString("IP", ip)
+                    findNavController().navigate(R.id.action_modes_to_aboutPage, args)
+                }
             }
             return@setOnNavigationItemSelectedListener true
         }

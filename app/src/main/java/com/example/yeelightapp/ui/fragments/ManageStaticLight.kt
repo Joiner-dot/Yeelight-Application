@@ -42,6 +42,10 @@ class ManageStaticLight : Fragment() {
                     args.putString("IP", ip)
                     findNavController().navigate(R.id.action_static1_to_modes, args)
                 }
+                R.id.action_about -> {
+                    args.putString("IP", ip)
+                    findNavController().navigate(R.id.action_static1_to_aboutPage, args)
+                }
             }
             return@setOnNavigationItemSelectedListener true
         }

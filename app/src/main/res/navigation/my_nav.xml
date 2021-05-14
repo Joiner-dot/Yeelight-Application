@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_static1_to_modes"
             app:destination="@id/modes" />
+        <action
+            android:id="@+id/action_static1_to_aboutPage"
+            app:destination="@id/aboutPage" />
     </fragment>
     <fragment
         android:id="@+id/modes"
@@ -56,5 +59,20 @@
         <action
             android:id="@+id/action_modes_to_static1"
             app:destination="@id/static1" />
+        <action
+            android:id="@+id/action_modes_to_aboutPage"
+            app:destination="@id/aboutPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutPage"
+        android:name="com.example.yeelightapp.AboutPage"
+        android:label="fragment_about_page"
+        tools:layout="@layout/fragment_about_page" >
+        <action
+            android:id="@+id/action_aboutPage_to_static1"
+            app:destination="@id/static1" />
+        <action
+            android:id="@+id/action_aboutPage_to_modes"
+            app:destination="@id/modes" />
     </fragment>
 </navigation>
