@@ -3,14 +3,14 @@
     android:color="@color/cardview_dark_background">
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <solid android:color="@color/cardview_light_background" />
+            <solid android:color="#D590FF" />
             <corners android:radius="15dp" />
         </shape>
     </item>
 
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
-            <solid android:color="@color/white" />
+            <solid android:color="#D590FF" />
             <stroke
                 android:width="2dp"
                 android:color="@color/black" />

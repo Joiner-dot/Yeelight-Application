@@ -8,14 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Switch
+import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.android.ext.android.inject
 
 class ManageModesOfLamp : Fragment() {
 
     private val lampViewModel: LampViewModel by inject()
     private val ip: String = this.arguments?.getString("IP").toString()
+    private val args = Bundle()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +35,17 @@ class ManageModesOfLamp : Fragment() {
         val workMode: Button = requireView().findViewById(R.id.workMode)
         val partyMode: Button = requireView().findViewById(R.id.partyMode)
         val romanticMode: Button = requireView().findViewById(R.id.romanticMode)
+        val navigationBottom: BottomNavigationView = requireView().findViewById(R.id.navigationMode)
+        navigationBottom.selectedItemId = R.id.action_mode
+        navigationBottom.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_light -> {
+                    args.putString("IP", ip)
+                    findNavController().navigate(R.id.action_modes_to_static1, args)
+                }
+            }
+            return@setOnNavigationItemSelectedListener true
+        }
         res.observe(this, { list ->
             turnSwitch(onOff, (list.power) == "on")
         })
@@ -50,6 +64,13 @@ class ManageModesOfLamp : Fragment() {
         romanticMode.setOnClickListener {
             lampViewModel.turnMode("Romantic")
             turnSwitch(onOff, true)
+        }
+        onOff.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                lampViewModel.turnOn()
+            } else {
+                lampViewModel.turnOff()
+            }
         }
     }
 

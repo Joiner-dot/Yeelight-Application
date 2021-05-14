@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -47,6 +48,8 @@ class ListFragments : Fragment() {
     fun processTheList(holder: ListAdapter.MyViewHolder, currentLamp: LampForUI) {
         val nameForRow = holder.itemView.findViewById<TextView>(R.id.lampName)
         val ipForRow = holder.itemView.findViewById<TextView>(R.id.ipLamp)
+        val lampIconForRow = holder.itemView.findViewById<ImageView>(R.id.lampRow)
+        lampIconForRow.setImageResource(R.drawable.list_lamp)
         ipForRow.text = currentLamp.ip
         nameForRow.text = currentLamp.name
         nameForRow.isClickable = true
@@ -64,7 +67,7 @@ class ListFragments : Fragment() {
                     args.putString("IP", currentLamp.ip)
                     args.putString("NAME", currentLamp.name)
                     findNavController().navigate(
-                        R.id.action_listFragments_to_mainMenu,
+                        R.id.action_listFragments_to_modes,
                         args
                     )
                 }

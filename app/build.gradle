@@ -67,6 +67,7 @@ dependencies {
     implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_android"
+    implementation 'android.arch.navigation:navigation-ui:1.0.0-alpha02'
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$test_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
