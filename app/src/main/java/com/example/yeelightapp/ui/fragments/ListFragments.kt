@@ -1,5 +1,6 @@
 package com.example.yeelightapp.ui.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +47,11 @@ class ListFragments : Fragment() {
         return view
     }
 
-    fun processTheList(holder: ListAdapter.MyViewHolder, currentLamp: LampForUI) {
+    fun processTheList(
+        holder: ListAdapter.MyViewHolder,
+        currentLamp: LampForUI,
+        firstLamp: LampForUI
+    ) {
         val nameForRow = holder.itemView.findViewById<TextView>(R.id.lampName)
         val ipForRow = holder.itemView.findViewById<TextView>(R.id.ipLamp)
         val lampIconForRow = holder.itemView.findViewById<ImageView>(R.id.lampRow)
@@ -80,6 +86,10 @@ class ListFragments : Fragment() {
                 Log.d("Exception", e.printStackTrace().toString())
             }
             return@setOnLongClickListener true
+        }
+        if (firstLamp.id == currentLamp.id) {
+            nameForRow.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.border_first_row)
         }
     }
 }

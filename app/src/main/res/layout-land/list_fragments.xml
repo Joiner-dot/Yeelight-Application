@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8EBFF"
+    android:background="#D9C4FF"
     tools:context=".ui.fragments.ListFragments">
 
     <TextView
@@ -21,17 +21,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.044" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
-        android:layout_height="57dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/todo"
         android:focusable="true"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="#006A31"
+        android:src="@drawable/plus_icon"
+        app:backgroundTint="#FFFFFF"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.958"
@@ -41,8 +42,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclefrag"
-        android:layout_width="728dp"
-        android:layout_height="189dp"
+        android:layout_width="fill_parent"
+        android:layout_height="194dp"
+        android:background="@drawable/style_for_textview_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"

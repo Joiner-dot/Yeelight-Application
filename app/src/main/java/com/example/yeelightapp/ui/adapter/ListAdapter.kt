@@ -26,7 +26,7 @@ class ListAdapter(listFragments: ListFragments) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentLamp = lampList[position]
-        listFragment.processTheList(holder, currentLamp)
+        listFragment.processTheList(holder, currentLamp, lampList[0])
 
     }
 

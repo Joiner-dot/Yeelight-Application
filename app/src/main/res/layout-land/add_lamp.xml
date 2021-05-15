@@ -5,23 +5,26 @@
     android:id="@+id/newLamp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BA6DFF"
+    android:background="#F8EBFF"
     tools:context=".ui.fragments.AddLamp">
 
 
     <EditText
         android:id="@+id/nameOfNewLamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="349dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#2C2C2C"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#434343"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.267" />
+        app:layout_constraintVertical_bias="0.281" />
 
     <TextView
         android:id="@+id/textView"
@@ -58,15 +61,17 @@
 
     <EditText
         android:id="@+id/idNewLamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="349dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#2C2C2C"
         android:ems="10"
         android:hint="@string/ip"
         android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#434343"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
