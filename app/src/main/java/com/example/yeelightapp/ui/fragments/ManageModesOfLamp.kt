@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Switch
 import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
@@ -29,12 +30,12 @@ class ManageModesOfLamp : Fragment() {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onResume() {
         super.onResume()
-        val onOff: Switch by lazy { requireView().findViewById(R.id.onOffMode) }
+        val onOff: Switch = requireView().findViewById(R.id.onOffMode)
         val res = lampViewModel.setCurrentRGBB(ip)
-        val nightMode: Button = requireView().findViewById(R.id.nightMode)
-        val workMode: Button = requireView().findViewById(R.id.workMode)
-        val partyMode: Button = requireView().findViewById(R.id.partyMode)
-        val romanticMode: Button = requireView().findViewById(R.id.romanticMode)
+        val nightMode: ImageButton = requireView().findViewById(R.id.nightMode)
+        val workMode: ImageButton = requireView().findViewById(R.id.workMode)
+        val partyMode: ImageButton = requireView().findViewById(R.id.partyMode)
+        val romanticMode: ImageButton = requireView().findViewById(R.id.romanticMode)
         val navigationBottom: BottomNavigationView = requireView().findViewById(R.id.navigationMode)
         navigationBottom.selectedItemId = R.id.action_mode
         navigationBottom.setOnNavigationItemSelectedListener {

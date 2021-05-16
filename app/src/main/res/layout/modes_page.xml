@@ -69,99 +69,168 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="97dp"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="171dp"
-                android:layout_height="85dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/fiels"
-                android:fontFamily="@font/share_tech"
-                android:text="Warm Light"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="171dp"
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="134dp"
                 android:layout_height="85dp"
-                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="2dp"
                 android:background="@drawable/fiels"
-                android:fontFamily="@font/share_tech"
-                android:text="Cold Light"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/cold_icon" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="134dp"
+                android:layout_height="85dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/fiels"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/warm_icon" />
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="49dp"
             android:layout_marginBottom="10dp"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/nightMode"
-                android:layout_width="171dp"
-                android:layout_height="85dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/fiels"
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="177dp"
+                android:layout_height="26dp"
                 android:fontFamily="@font/share_tech"
-                android:text="Night"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:text="Cold Light"
+                android:textColor="#000000" />
 
-            <Button
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="175dp"
+                android:layout_height="26dp"
+                android:fontFamily="@font/share_tech"
+                android:gravity="center"
+                android:text="Warm Light"
+                android:textColor="#000000" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="256dp"
+            android:layout_height="72dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/nightMode"
+                android:layout_width="93dp"
+                android:layout_height="85dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/fiels"
+                android:scaleType="fitCenter"
+                android:src="@drawable/night" />
+
+            <ImageButton
                 android:id="@+id/partyMode"
                 android:layout_width="171dp"
                 android:layout_height="85dp"
-                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
                 android:background="@drawable/fiels"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/partymode_icon" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
                 android:fontFamily="@font/share_tech"
+                android:gravity="center"
+                android:text="Night"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:fontFamily="@font/share_tech"
+                android:gravity="center"
                 android:text="Party"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="#000000" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawingCacheQuality="auto"
             android:gravity="center">
 
-            <Button
+            <ImageButton
                 android:id="@+id/romanticMode"
-                android:layout_width="171dp"
-                android:layout_height="86dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/fiels"
-                android:fontFamily="@font/share_tech"
-                android:text="Romantic"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/workMode"
-                android:layout_width="171dp"
+                android:layout_width="93dp"
                 android:layout_height="85dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
                 android:background="@drawable/fiels"
-                android:fontFamily="@font/share_tech"
-                android:text="Work"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/novel" />
+
+            <ImageButton
+                android:id="@+id/workMode"
+                android:layout_width="113dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/fiels"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/work_icon" />
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="151dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/share_tech"
+                android:gravity="center"
+                android:text="Romantic"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:fontFamily="@font/share_tech"
+                android:gravity="center"
+                android:text="Work"
+                android:textColor="#000000" />
+        </TableRow>
+
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
