@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
-import com.example.yeelightapp.lamps.LampForUI
+import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.ui.fragments.ListFragments
 
 
 class ListAdapter(listFragments: ListFragments) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    private var lampList = arrayListOf<LampForUI>()
+    private var lampList = arrayListOf<LampUI>()
     private val listFragment = listFragments
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -30,18 +30,18 @@ class ListAdapter(listFragments: ListFragments) :
 
     }
 
-    fun setData(lamps: ArrayList<LampForUI>) {
+    fun setData(lamps: List<LampUI>) {
         var flag = false
         val index: Int
         if (lampList.size > lamps.size) {
-            for (it in 0 until lamps.size) {
+            for (it in lamps.indices) {
                 if (lamps[it].name != lampList[it].name || lamps[it].ip != lampList[it].ip) {
                     lampList.removeAt(it)
                     notifyItemRemoved(it)
                     flag = true
                 }
             }
-            if (!flag || lamps.size == 0) {
+            if (!flag || lamps.isEmpty()) {
                 index = lampList.size - 1
                 lampList.removeAt(index)
                 notifyItemRemoved(index)

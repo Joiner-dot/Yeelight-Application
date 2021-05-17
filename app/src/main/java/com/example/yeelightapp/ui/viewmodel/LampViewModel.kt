@@ -2,12 +2,14 @@ package com.example.yeelightapp.ui.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.yeelightapp.data.api.YeelightAPIImpl
+import com.example.yeelightapp.data.api.enums.Modes
 import com.example.yeelightapp.data.datasource.room.LampDataBase
 import com.example.yeelightapp.data.repository.LampRepositoryImpl
 import com.example.yeelightapp.data.repository.interfaces.LampRepository
-import com.example.yeelightapp.lamps.LampForUI
+import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.mapper.LampMapper
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +19,7 @@ import java.net.SocketTimeoutException
 
 class LampViewModel(application: Application) : ViewModel() {
 
-    val readAllData: LiveData<ArrayList<LampForUI>>
+    val readAllData: LiveData<List<LampUI>>
     private val repositoryImpl: LampRepository
     private val lampMapper: LampMapper = LampMapper()
 
@@ -28,22 +30,29 @@ class LampViewModel(application: Application) : ViewModel() {
     }
 
 
-    fun addLamp(lamp: LampForUI) {
+    fun addLamp(lamp: LampUI) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.addLamp(lampMapper.reverseTransform(lamp))
         }
     }
 
-    fun turnMode(mode:String) {
+    fun turnMode(mode: Modes) {
         viewModelScope.launch(Dispatchers.Default) {
             repositoryImpl.turnMode(mode)
         }
     }
 
-    fun deleteLamp(id:Int) {
+    fun deleteLamp(lamp: LampUI): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.deleteLamp(id)
+            try {
+                repositoryImpl.deleteLamp(lampMapper.reverseTransform(lamp))
+                result.postValue(true)
+            } catch (e: Exception) {
+                result.postValue(false)
+            }
         }
+        return result
     }
 
     fun connect(ip: String): LiveData<Boolean> {

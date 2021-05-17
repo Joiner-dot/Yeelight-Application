@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.yeelightapp.data.dao.room.LampDB
-import com.example.yeelightapp.lamps.LampFromDB
+import com.example.yeelightapp.data.dao.room.LampDAO
+import com.example.yeelightapp.lamps.LampDB
 
-@Database(entities = [LampFromDB::class], version = 1, exportSchema = false)
+@Database(entities = [LampDB::class], version = 1, exportSchema = false)
 abstract class LampDataBase : RoomDatabase() {
 
-    abstract fun lampDAO(): LampDB
+    abstract fun lampDAO(): LampDAO
 
     companion object {
         @Volatile
@@ -22,15 +22,15 @@ abstract class LampDataBase : RoomDatabase() {
                 return tempInstance
             }
 
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
+            val instance: LampDataBase by lazy {
+                Room.databaseBuilder(
                     context.applicationContext,
                     LampDataBase::class.java,
                     "lamps"
                 ).build()
-                INSTANCE = instance
-                return instance
             }
+            INSTANCE = instance
+            return instance
         }
     }
 }

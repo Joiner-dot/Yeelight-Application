@@ -1,14 +1,15 @@
 package com.example.yeelightapp.data.repository.interfaces
 
-import com.example.yeelightapp.lamps.LampFromDB
+import com.example.yeelightapp.data.api.enums.Modes
+import com.example.yeelightapp.lamps.LampDB
 import com.example.yeelightapp.lamps.PropertyForUI
 
 
 interface LampRepository {
 
-    suspend fun addLamp(lamp: LampFromDB)
+    suspend fun addLamp(lamp: LampDB)
 
-    suspend fun deleteLamp(id:Int)
+    suspend fun deleteLamp(lamp: LampDB)
 
     suspend fun connect(ip: String)
 
@@ -22,5 +23,5 @@ interface LampRepository {
 
     suspend fun turnOff()
 
-    suspend fun turnMode(mode:String)
+    suspend fun turnMode(mode:Modes)
 }

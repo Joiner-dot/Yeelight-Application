@@ -2,6 +2,7 @@ package com.example.yeelightapp.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Display
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.Switch
 import androidx.navigation.fragment.findNavController
 import com.example.yeelightapp.R
+import com.example.yeelightapp.data.api.enums.Modes
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.android.ext.android.inject
@@ -55,19 +57,19 @@ class ManageModesOfLamp : Fragment() {
             turnSwitch(onOff, (list.power) == "on")
         })
         nightMode.setOnClickListener {
-            lampViewModel.turnMode("Night")
+            lampViewModel.turnMode(Modes.Night)
             turnSwitch(onOff, true)
         }
         workMode.setOnClickListener {
-            lampViewModel.turnMode("Work")
+            lampViewModel.turnMode(Modes.Work)
             turnSwitch(onOff, true)
         }
         partyMode.setOnClickListener {
-            lampViewModel.turnMode("Party")
+            lampViewModel.turnMode(Modes.Party)
             turnSwitch(onOff, true)
         }
         romanticMode.setOnClickListener {
-            lampViewModel.turnMode("Romantic")
+            lampViewModel.turnMode(Modes.Romantic)
             turnSwitch(onOff, true)
         }
         onOff.setOnCheckedChangeListener { _, isChecked ->
@@ -80,14 +82,16 @@ class ManageModesOfLamp : Fragment() {
     }
 
     private fun turnSwitch(onOff: Switch, value: Boolean) {
-        if (!onOff.isChecked && value) {
-            onOff.setOnCheckedChangeListener(null)
-            onOff.isChecked = value
-            onOff.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    lampViewModel.turnOn()
-                } else {
-                    lampViewModel.turnOff()
+        onOff.apply {
+            if (!this.isChecked && value) {
+                setOnCheckedChangeListener(null)
+                isChecked = value
+                setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        lampViewModel.turnOn()
+                    } else {
+                        lampViewModel.turnOff()
+                    }
                 }
             }
         }

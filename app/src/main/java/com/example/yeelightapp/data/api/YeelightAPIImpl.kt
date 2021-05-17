@@ -4,8 +4,8 @@ import android.graphics.Color
 import com.example.yeelightapp.data.api.enums.Modes
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.lamps.PropertyForUI
-import com.example.yeelightapp.lamps.PropertyFromCommand
-import com.example.yeelightapp.lamps.SetCommandClass
+import com.example.yeelightapp.lamps.Properties
+import com.example.yeelightapp.lamps.SetCommand
 import com.google.gson.Gson
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
@@ -19,6 +19,7 @@ class YeelightAPIImpl : YeelightAPI {
     private lateinit var mBos: BufferedOutputStream
     private lateinit var mReader: BufferedReader
     private val gson = Gson()
+    private val nextLine = "\r\n"
 
     override suspend fun connect(ip: String) {
         val mSocket = Socket()
@@ -34,45 +35,45 @@ class YeelightAPIImpl : YeelightAPI {
     override suspend fun changeRGB(red: Int, green: Int, blue: Int) {
         val color = (red * 65536) + (green * 256) + blue
         val jsonString = gson.toJson(
-            SetCommandClass(
+            SetCommand(
                 1,
                 "set_rgb",
                 listOf(color, "smooth", 500)
             )
-        ) + "\r\n"
+        ) + nextLine
         printToTheLamp(jsonString)
     }
 
     override suspend fun changeBrightness(brightness: Int) {
         val jsonString = gson.toJson(
-            SetCommandClass(
+            SetCommand(
                 1,
                 "set_bright",
                 listOf(brightness, "smooth", 500)
             )
-        ) + "\r\n"
+        ) + nextLine
         printToTheLamp(jsonString)
     }
 
     override suspend fun turnOn() {
         val jsonString = gson.toJson(
-            SetCommandClass(
+            SetCommand(
                 1,
                 "set_power",
                 listOf("on", "smooth", 500)
             )
-        ) + "\r\n"
+        ) + nextLine
         printToTheLamp(jsonString)
     }
 
     override suspend fun turnOff() {
         val jsonString = gson.toJson(
-            SetCommandClass(
+            SetCommand(
                 1,
                 "set_power",
                 listOf("off", "smooth", 500)
             )
-        ) + "\r\n"
+        ) + nextLine
         printToTheLamp(jsonString)
 
     }
@@ -102,12 +103,12 @@ class YeelightAPIImpl : YeelightAPI {
         var currentLine: String
         val propertyForUI: PropertyForUI
         val jsonString = gson.toJson(
-            SetCommandClass(
+            SetCommand(
                 1,
                 "get_prop",
                 listOf("power", "rgb", "bright")
             )
-        ) + "\r\n"
+        ) + nextLine
         while (true) {
             printToTheLamp(jsonString)
             while (true) {
@@ -122,13 +123,13 @@ class YeelightAPIImpl : YeelightAPI {
             }
             break
         }
-        val propertyFromCommand: PropertyFromCommand = Gson().fromJson(value, PropertyFromCommand::class.java)
+        val properties: Properties = Gson().fromJson(value, Properties::class.java)
         propertyForUI = PropertyForUI(
-            Color.red(propertyFromCommand.result[1].toInt()),
-            Color.green(propertyFromCommand.result[1].toInt()),
-            Color.blue(propertyFromCommand.result[1].toInt()),
-            propertyFromCommand.result[2].toInt(),
-            propertyFromCommand.result[0]
+            Color.red(properties.result[1].toInt()),
+            Color.green(properties.result[1].toInt()),
+            Color.blue(properties.result[1].toInt()),
+            properties.result[2].toInt(),
+            properties.result[0]
         )
         return propertyForUI
     }

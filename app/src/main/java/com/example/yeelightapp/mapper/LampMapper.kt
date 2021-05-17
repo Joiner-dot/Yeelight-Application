@@ -3,21 +3,21 @@ package com.example.yeelightapp.mapper
 import androidx.arch.core.util.Function
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.example.yeelightapp.lamps.LampForUI
-import com.example.yeelightapp.lamps.LampFromDB
+import com.example.yeelightapp.lamps.LampUI
+import com.example.yeelightapp.lamps.LampDB
 
 class LampMapper {
-    fun transform(data: LiveData<List<LampFromDB>>): LiveData<ArrayList<LampForUI>> {
+    fun transform(data: LiveData<List<LampDB>>): LiveData<List<LampUI>> {
         return Transformations.map(data,
             Function {
-                val listResults = arrayListOf<LampForUI>()
+                val listResults = arrayListOf<LampUI>()
                 listResults.clear()
                 for (i in it) {
-                    listResults.add(LampForUI(i.id, i.name, i.ip))
+                    listResults.add(LampUI(i.id, i.name, i.ip))
                 }
                 return@Function listResults
             })
     }
 
-    fun reverseTransform(data: LampForUI): LampFromDB = LampFromDB(0, data.name, data.ip)
+    fun reverseTransform(data: LampUI): LampDB = LampDB(data.id, data.name, data.ip)
 }

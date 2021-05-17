@@ -1,6 +1,5 @@
 package com.example.yeelightapp.ui.fragments
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
-import com.example.yeelightapp.lamps.LampForUI
+import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.ui.adapter.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,8 +48,8 @@ class ListFragments : Fragment() {
 
     fun processTheList(
         holder: ListAdapter.MyViewHolder,
-        currentLamp: LampForUI,
-        firstLamp: LampForUI
+        currentLamp: LampUI,
+        firstLamp: LampUI
     ) {
         val nameForRow = holder.itemView.findViewById<TextView>(R.id.lampName)
         val ipForRow = holder.itemView.findViewById<TextView>(R.id.ipLamp)
@@ -80,11 +79,23 @@ class ListFragments : Fragment() {
             })
         }
         nameForRow.setOnLongClickListener {
-            try {
-                mLampViewModel.deleteLamp(currentLamp.id)
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
-            }
+            val result = mLampViewModel.deleteLamp(currentLamp)
+            result.observe(this, { value ->
+                if (value) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Deleted",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to Delete",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    findNavController().navigate(R.id.action_listFragments_self)
+                }
+            })
             return@setOnLongClickListener true
         }
         if (firstLamp.id == currentLamp.id) {

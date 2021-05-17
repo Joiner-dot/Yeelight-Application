@@ -25,6 +25,9 @@
             app:exitAnim="@anim/slide_out"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right"/>
+        <action
+            android:id="@+id/action_listFragments_self"
+            app:destination="@id/listFragments" />
     </fragment>
     <fragment
         android:id="@+id/addLamp"

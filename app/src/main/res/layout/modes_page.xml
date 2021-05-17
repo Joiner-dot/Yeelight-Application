@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8C4FF"
+    android:background="@drawable/constraint_modes_color"
     tools:context=".ui.fragments.ManageModesOfLamp">
 
     <Switch
@@ -21,7 +21,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884" />
+        app:layout_constraintVertical_bias="0.884"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationMode"
@@ -53,117 +54,133 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041" />
+        app:layout_constraintVertical_bias="0.049" />
 
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="448dp"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="465dp"
         android:background="@drawable/fiells"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="97dp"
-            android:gravity="center">
-
+            android:layout_height="87dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="134dp"
-                android:layout_height="85dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="2dp"
+                android:id="@+id/coldLight"
+                android:layout_width="81dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
                 android:background="@drawable/fiels"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/cold_icon" />
+                android:src="@drawable/ic_desk_lamp" />
 
             <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="134dp"
-                android:layout_height="85dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="2dp"
+                android:id="@+id/warmLight"
+                android:layout_width="81dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
                 android:background="@drawable/fiels"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/warm_icon" />
+                android:src="@drawable/ic_desk_warm" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="177dp"
-                android:layout_height="26dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Cold Light"
                 android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView14"
-                android:layout_width="175dp"
-                android:layout_height="26dp"
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Warm Light"
                 android:textColor="#000000" />
-        </TableRow>
 
-        <TableRow
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="256dp"
-            android:layout_height="72dp"
-            android:gravity="center">
+            android:layout_height="87dp"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/nightMode"
-                android:layout_width="93dp"
-                android:layout_height="85dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="2dp"
+                android:layout_width="300dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
                 android:background="@drawable/fiels"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/night" />
+                android:src="@drawable/ic_night" />
 
             <ImageButton
                 android:id="@+id/partyMode"
-                android:layout_width="171dp"
-                android:layout_height="85dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="2dp"
+                android:layout_width="300dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
                 android:background="@drawable/fiels"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/partymode_icon" />
+                android:src="@drawable/ic_party" />
+        </LinearLayout>
 
-        </TableRow>
-
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
+                android:id="@+id/textView14"
+                android:layout_width="23dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Night"
@@ -172,50 +189,62 @@
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
-                android:layout_height="26dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Party"
                 android:textColor="#000000" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawingCacheQuality="auto"
-            android:gravity="center">
+            android:layout_height="87dp"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/romanticMode"
-                android:layout_width="93dp"
-                android:layout_height="85dp"
-                android:layout_marginEnd="2dp"
+                android:layout_width="300dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
                 android:background="@drawable/fiels"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/novel" />
+                android:src="@drawable/ic_cheers" />
 
             <ImageButton
                 android:id="@+id/workMode"
-                android:layout_width="113dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginLeft="2dp"
+                android:layout_width="300dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
                 android:background="@drawable/fiels"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/work_icon" />
+                android:src="@drawable/ic_computer" />
+        </LinearLayout>
 
-        </TableRow>
-
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="15dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView18"
-                android:layout_width="151dp"
-                android:layout_height="match_parent"
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Romantic"
@@ -223,14 +252,16 @@
 
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Work"
                 android:textColor="#000000" />
-        </TableRow>
+        </LinearLayout>
 
-    </TableLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
