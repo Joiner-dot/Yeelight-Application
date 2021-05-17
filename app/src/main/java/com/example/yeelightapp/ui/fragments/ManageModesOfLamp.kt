@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.yeelightapp.R
 import com.example.yeelightapp.data.api.enums.Modes
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
@@ -23,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ManageModesOfLamp : Fragment() {
 
     private val lampViewModel: LampViewModel by inject()
-    private val args: ManageModesOfLampArgs by navArgs()
+    private val args: Bundle by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,39 +31,27 @@ class ManageModesOfLamp : Fragment() {
         return inflater.inflate(R.layout.modes_page, container, false)
     }
 
-    @SuppressLint("UseSwitchCompatOrMaterialCode", "UseRequireInsteadOfGet")
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onResume() {
         super.onResume()
-
+        val ip: String = this.arguments?.getString("IP").toString()
         val onOff: Switch = requireView().findViewById(R.id.onOffMode)
-
-        val ip = args.IP
-
         val res = lampViewModel.setCurrentRGBB(ip)
-
         val nightMode: ImageButton = requireView().findViewById(R.id.nightMode)
-
         val workMode: ImageButton = requireView().findViewById(R.id.workMode)
-
         val partyMode: ImageButton = requireView().findViewById(R.id.partyMode)
-
         val romanticMode: ImageButton = requireView().findViewById(R.id.romanticMode)
-
         val navigationBottom: BottomNavigationView = requireView().findViewById(R.id.navigationMode)
-
-
         navigationBottom.selectedItemId = R.id.action_mode
         navigationBottom.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_light -> {
-                    findNavController().navigate(
-                        ManageModesOfLampDirections.actionModesToStatic1(ip)
-                    )
+                    args.putString("IP", ip)
+                    findNavController().navigate(R.id.action_modes_to_static1, args)
                 }
                 R.id.action_about -> {
-                    findNavController().navigate(
-                        ManageModesOfLampDirections.actionModesToAboutPage(ip)
-                    )
+                    args.putString("IP", ip)
+                    findNavController().navigate(R.id.action_modes_to_aboutPage, args)
                 }
             }
             return@setOnNavigationItemSelectedListener true

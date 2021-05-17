@@ -28,7 +28,6 @@ class AddLamp : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.add_lamp, container, false)
-
         val select: Button = view.findViewById(R.id.select)
 
         select.setOnClickListener {
