@@ -14,6 +14,7 @@ import java.net.SocketTimeoutException
 class LampViewModel : ViewModelNew() {
 
     val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
+    private var tryFlag = 0
 
 
     fun addLamp(lamp: LampUI) {
@@ -61,11 +62,22 @@ class LampViewModel : ViewModelNew() {
     }
 
     fun setCurrentRGBB(ip: String): LiveData<PropertyForUI> {
-        val result = MutableLiveData<PropertyForUI>()
-        viewModelScope.launch(Dispatchers.IO) {
-            result.postValue(repositoryImpl.setCurrentRGBB(ip))
+        try {
+            val result = MutableLiveData<PropertyForUI>()
+            viewModelScope.launch(Dispatchers.IO) {
+                result.postValue(repositoryImpl.setCurrentRGBB(ip))
+            }
+            tryFlag = 0
+            return result
+        } catch (e: SocketException) {
+            if (tryFlag < 1) {
+                tryFlag++
+                setCurrentRGBB(ip)
+            }
+        } catch (e: Exception) {
         }
-        return result
+        tryFlag = 0
+        return MutableLiveData()
     }
 
     fun changeRGB(red: Int, green: Int, blue: Int) {
