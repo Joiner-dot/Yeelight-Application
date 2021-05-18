@@ -3,23 +3,18 @@ package com.example.yeelightapp.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.yeelightapp.data.api.enums.Modes
-import com.example.yeelightapp.data.repository.LampRepositoryImpl
-import com.example.yeelightapp.data.repository.interfaces.LampRepository
+import com.example.yeelightapp.di.koincomponents.ViewModelNew
 import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.lamps.PropertyForUI
-import com.example.yeelightapp.mapper.LampMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.net.SocketException
 import java.net.SocketTimeoutException
 
-class LampViewModel : ViewModel(), KoinComponent {
+class LampViewModel : ViewModelNew() {
 
-    private val repositoryImpl: LampRepository by inject<LampRepositoryImpl>()
-    private val lampMapper: LampMapper by inject()
     val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
+
 
     fun addLamp(lamp: LampUI) {
         viewModelScope.launch(Dispatchers.IO) {

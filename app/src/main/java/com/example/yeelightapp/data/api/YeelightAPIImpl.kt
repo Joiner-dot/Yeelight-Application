@@ -4,12 +4,11 @@ import android.graphics.Color
 import android.util.Log
 import com.example.yeelightapp.data.api.enums.*
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
+import com.example.yeelightapp.di.koincomponents.KoinDI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.lamps.Properties
 import com.example.yeelightapp.lamps.SetCommand
 import com.google.gson.Gson
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -18,13 +17,11 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 
-class YeelightAPIImpl : YeelightAPI, KoinComponent {
+class YeelightAPIImpl : YeelightAPI, KoinDI() {
 
     private lateinit var mBos: BufferedOutputStream
 
     private lateinit var mReader: BufferedReader
-
-    private val gson:Gson by inject()
 
     override suspend fun connect(ip: String) {
         val mSocket = Socket()
@@ -97,6 +94,7 @@ class YeelightAPIImpl : YeelightAPI, KoinComponent {
     }
 
     override suspend fun romanticMode() {
+        Log.d("HHEHEH", Modes.Romantic.command)
         printToTheLamp(Modes.Romantic.command)
     }
 
