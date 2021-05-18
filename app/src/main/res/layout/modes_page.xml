@@ -21,7 +21,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884"
+        app:layout_constraintVertical_bias="0.899"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -70,17 +70,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="87dp"
+            android:layout_height="107dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/coldLight"
                 android:layout_width="81dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="60dp"
+                android:layout_height="101dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
@@ -92,10 +92,10 @@
             <ImageButton
                 android:id="@+id/warmLight"
                 android:layout_width="81dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="40dp"
+                android:layout_height="101dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/fiels"
@@ -114,7 +114,7 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="23dp"
+                android:layout_marginStart="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
@@ -125,7 +125,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="17dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
@@ -137,16 +137,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="87dp"
+            android:layout_height="107dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/nightMode"
                 android:layout_width="300dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="60dp"
+                android:layout_height="101dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
@@ -158,10 +158,10 @@
             <ImageButton
                 android:id="@+id/partyMode"
                 android:layout_width="300dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="40dp"
+                android:layout_height="101dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/fiels"
@@ -179,7 +179,7 @@
                 android:id="@+id/textView14"
                 android:layout_width="23dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
+                android:layout_marginLeft="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
@@ -190,7 +190,7 @@
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="17dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
@@ -201,16 +201,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="87dp"
+            android:layout_height="107dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/romanticMode"
                 android:layout_width="300dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="60dp"
+                android:layout_height="101dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
@@ -222,10 +222,10 @@
             <ImageButton
                 android:id="@+id/workMode"
                 android:layout_width="300dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="40dp"
+                android:layout_height="101dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/fiels"
@@ -243,7 +243,7 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="23dp"
+                android:layout_marginStart="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
@@ -254,7 +254,7 @@
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="17dp"
+                android:layout_marginEnd="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"

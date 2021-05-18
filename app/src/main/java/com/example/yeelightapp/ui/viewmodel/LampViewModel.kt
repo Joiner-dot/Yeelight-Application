@@ -1,12 +1,8 @@
 package com.example.yeelightapp.ui.viewmodel
 
-import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.yeelightapp.data.api.YeelightAPIImpl
 import com.example.yeelightapp.data.api.enums.Modes
-import com.example.yeelightapp.data.datasource.room.LampDataBase
 import com.example.yeelightapp.data.repository.LampRepositoryImpl
 import com.example.yeelightapp.data.repository.interfaces.LampRepository
 import com.example.yeelightapp.lamps.LampUI
@@ -14,21 +10,16 @@ import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.mapper.LampMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.net.SocketException
 import java.net.SocketTimeoutException
 
-class LampViewModel(application: Application) : ViewModel() {
+class LampViewModel : ViewModel(), KoinComponent {
 
-    val readAllData: LiveData<List<LampUI>>
-    private val repositoryImpl: LampRepository
-    private val lampMapper: LampMapper = LampMapper()
-
-    init {
-        val lampDao = LampDataBase.getDatabase(application).lampDAO()
-        repositoryImpl = LampRepositoryImpl(lampDao, YeelightAPIImpl())
-        readAllData = lampMapper.transform(repositoryImpl.readAllData)
-    }
-
+    private val repositoryImpl: LampRepository by inject<LampRepositoryImpl>()
+    private val lampMapper: LampMapper by inject()
+    val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
 
     fun addLamp(lamp: LampUI) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -46,7 +37,7 @@ class LampViewModel(application: Application) : ViewModel() {
         val result = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repositoryImpl.deleteLamp(lampMapper.reverseTransform(lamp))
+                repositoryImpl.deleteLamp(lamp.id)
                 result.postValue(true)
             } catch (e: Exception) {
                 result.postValue(false)

@@ -24,7 +24,11 @@
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/slide_out"
             app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right"/>
+            app:popExitAnim="@anim/slide_to_right" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
         <action
             android:id="@+id/action_listFragments_self"
             app:destination="@id/listFragments" />
@@ -46,36 +50,72 @@
         android:id="@+id/static1"
         android:name="com.example.yeelightapp.ui.fragments.ManageStaticLight"
         android:label="fragment_static"
-        tools:layout="@layout/fragment_static" >
+        tools:layout="@layout/fragment_static">
+        <argument
+            android:name="IP"
+            android:defaultValue='"Hello"'
+            app:argType="string" />
         <action
             android:id="@+id/action_static1_to_modes"
-            app:destination="@id/modes" />
+            app:destination="@id/modes" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
         <action
             android:id="@+id/action_static1_to_aboutPage"
-            app:destination="@id/aboutPage" />
+            app:destination="@id/aboutPage" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/modes"
         android:name="com.example.yeelightapp.ui.fragments.ManageModesOfLamp"
         android:label="modes_page"
-        tools:layout="@layout/modes_page" >
+        tools:layout="@layout/modes_page">
+        <argument
+            android:name="IP"
+            android:defaultValue='"Hello"'
+            app:argType="string" />
         <action
             android:id="@+id/action_modes_to_static1"
-            app:destination="@id/static1" />
+            app:destination="@id/static1" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
         <action
             android:id="@+id/action_modes_to_aboutPage"
-            app:destination="@id/aboutPage" />
+            app:destination="@id/aboutPage" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/aboutPage"
-        android:name="com.example.yeelightapp.AboutPage"
+        android:name="com.example.yeelightapp.ui.fragments.AboutPage"
         android:label="fragment_about_page"
-        tools:layout="@layout/fragment_about_page" >
+        tools:layout="@layout/fragment_about_page">
+        <argument
+            android:name="IP"
+            android:defaultValue='"Hello"'
+            app:argType="string" />
         <action
             android:id="@+id/action_aboutPage_to_static1"
-            app:destination="@id/static1" />
+            app:destination="@id/static1" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
         <action
             android:id="@+id/action_aboutPage_to_modes"
-            app:destination="@id/modes" />
+            app:destination="@id/modes" >
+            <argument
+                android:name="IP"
+                android:defaultValue='"Hello"' />
+        </action>
     </fragment>
 </navigation>

@@ -14,7 +14,9 @@ class ListAdapter(listFragments: ListFragments) :
     RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var lampList = arrayListOf<LampUI>()
+
     private val listFragment = listFragments
+
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -31,8 +33,12 @@ class ListAdapter(listFragments: ListFragments) :
     }
 
     fun setData(lamps: List<LampUI>) {
+
         var flag = false
+
         val index: Int
+
+
         if (lampList.size > lamps.size) {
             for (it in lamps.indices) {
                 if (lamps[it].name != lampList[it].name || lamps[it].ip != lampList[it].ip) {

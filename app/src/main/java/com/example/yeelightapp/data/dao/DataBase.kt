@@ -9,5 +9,5 @@ interface DataBase {
 
     fun selectAllLamps(): LiveData<List<LampDB>>
 
-    suspend fun deleteLamp(lamp: LampDB)
+    suspend fun deleteLamp(id:Int)
 }

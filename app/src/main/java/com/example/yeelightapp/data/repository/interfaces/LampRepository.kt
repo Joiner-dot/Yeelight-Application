@@ -1,5 +1,6 @@
 package com.example.yeelightapp.data.repository.interfaces
 
+import androidx.lifecycle.LiveData
 import com.example.yeelightapp.data.api.enums.Modes
 import com.example.yeelightapp.lamps.LampDB
 import com.example.yeelightapp.lamps.PropertyForUI
@@ -7,9 +8,11 @@ import com.example.yeelightapp.lamps.PropertyForUI
 
 interface LampRepository {
 
+    val readAllData: LiveData<List<LampDB>>
+
     suspend fun addLamp(lamp: LampDB)
 
-    suspend fun deleteLamp(lamp: LampDB)
+    suspend fun deleteLamp(id: Int)
 
     suspend fun connect(ip: String)
 
@@ -23,5 +26,5 @@ interface LampRepository {
 
     suspend fun turnOff()
 
-    suspend fun turnMode(mode:Modes)
+    suspend fun turnMode(mode: Modes)
 }
