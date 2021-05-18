@@ -1,6 +1,3 @@
 package com.example.yeelightapp.lamps
 
-class Properties(_id: Int, _result: List<String>) {
-    var id = _id
-    var result = _result
-}
+data class Properties(val id: Int, val result: List<String>)

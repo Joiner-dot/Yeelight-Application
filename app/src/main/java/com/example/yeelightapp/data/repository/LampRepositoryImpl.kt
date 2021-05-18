@@ -12,14 +12,14 @@ import com.example.yeelightapp.lamps.PropertyForUI
 class LampRepositoryImpl(private val dataBase: DataBase, private val yeelightAPI: YeelightAPI) :
     LampRepository {
 
-    val readAllData: LiveData<List<LampDB>> = dataBase.selectAllLamps()
+    override val readAllData: LiveData<List<LampDB>> = dataBase.selectAllLamps()
 
     override suspend fun addLamp(lamp: LampDB) {
         dataBase.insertNewLamp(lamp)
     }
 
-    override suspend fun deleteLamp(lamp: LampDB) {
-        dataBase.deleteLamp(lamp)
+    override suspend fun deleteLamp(id: Int) {
+        dataBase.deleteLamp(id)
     }
 
     override suspend fun connect(ip: String) {

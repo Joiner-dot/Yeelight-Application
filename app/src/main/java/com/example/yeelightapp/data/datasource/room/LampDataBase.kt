@@ -11,26 +11,4 @@ import com.example.yeelightapp.lamps.LampDB
 abstract class LampDataBase : RoomDatabase() {
 
     abstract fun lampDAO(): LampDAO
-
-    companion object {
-        @Volatile
-        private var INSTANCE: LampDataBase? = null
-
-        fun getDatabase(context: Context): LampDataBase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-
-            val instance: LampDataBase by lazy {
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    LampDataBase::class.java,
-                    "lamps"
-                ).build()
-            }
-            INSTANCE = instance
-            return instance
-        }
-    }
 }

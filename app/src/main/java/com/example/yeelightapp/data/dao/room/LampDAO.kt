@@ -14,6 +14,6 @@ interface LampDAO : DataBase {
     @Query("SELECT * FROM lamps")
     override fun selectAllLamps(): LiveData<List<LampDB>>
 
-    @Delete
-    override suspend fun deleteLamp(lamp: LampDB)
+    @Query("DELETE FROM lamps WHERE id = :id")
+    override suspend fun deleteLamp(id: Int)
 }

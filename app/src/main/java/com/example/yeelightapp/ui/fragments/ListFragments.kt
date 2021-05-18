@@ -19,6 +19,7 @@ import com.example.yeelightapp.ui.adapter.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ListFragments : Fragment() {
@@ -29,10 +30,15 @@ class ListFragments : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val view: View = inflater.inflate(R.layout.list_fragments, container, false)
+
         val recycle: RecyclerView = view.findViewById(R.id.recyclefrag)
+
         val floatingActionButton: FloatingActionButton = view.findViewById(R.id.addButton)
+
         val adapter = ListAdapter(this)
+
         recycle.adapter = adapter
         recycle.layoutManager = LinearLayoutManager(
             requireContext(), LinearLayoutManager.VERTICAL, false
@@ -51,9 +57,14 @@ class ListFragments : Fragment() {
         currentLamp: LampUI,
         firstLamp: LampUI
     ) {
+
         val nameForRow = holder.itemView.findViewById<TextView>(R.id.lampName)
+
         val ipForRow = holder.itemView.findViewById<TextView>(R.id.ipLamp)
+
         val lampIconForRow = holder.itemView.findViewById<ImageView>(R.id.lampRow)
+
+
         lampIconForRow.setImageResource(R.drawable.list_lamp)
         ipForRow.text = currentLamp.ip
         nameForRow.text = currentLamp.name
@@ -68,18 +79,17 @@ class ListFragments : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    val args = Bundle()
-                    args.putString("IP", currentLamp.ip)
-                    args.putString("NAME", currentLamp.name)
                     findNavController().navigate(
-                        R.id.action_listFragments_to_modes,
-                        args
+                        ListFragmentsDirections.actionListFragmentsToModes(currentLamp.ip)
                     )
                 }
             })
         }
         nameForRow.setOnLongClickListener {
+
             val result = mLampViewModel.deleteLamp(currentLamp)
+
+
             result.observe(this, { value ->
                 if (value) {
                     Toast.makeText(

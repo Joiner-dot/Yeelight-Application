@@ -2,6 +2,7 @@ package com.example.yeelightapp.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.yeelightapp.R
 import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddLamp : Fragment() {
 
@@ -24,6 +26,7 @@ class AddLamp : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.add_lamp, container, false)
 
         val select: Button = view.findViewById(R.id.select)
@@ -37,6 +40,7 @@ class AddLamp : Fragment() {
 
     private fun insertDataToDataBase() {
         val nameForInsert = view?.findViewById<TextView>(R.id.nameOfNewLamp)?.text
+
         val ipForInsert = view?.findViewById<TextView>(R.id.idNewLamp)?.text
 
         if (requireActivity().currentFocus != null) {

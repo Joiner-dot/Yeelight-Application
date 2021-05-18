@@ -1,12 +1,15 @@
 package com.example.yeelightapp.data.api
 
 import android.graphics.Color
-import com.example.yeelightapp.data.api.enums.Modes
+import android.util.Log
+import com.example.yeelightapp.data.api.enums.*
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.lamps.Properties
 import com.example.yeelightapp.lamps.SetCommand
 import com.google.gson.Gson
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -15,11 +18,13 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 
-class YeelightAPIImpl : YeelightAPI {
+class YeelightAPIImpl : YeelightAPI, KoinComponent {
+
     private lateinit var mBos: BufferedOutputStream
+
     private lateinit var mReader: BufferedReader
-    private val gson = Gson()
-    private val nextLine = "\r\n"
+
+    private val gson:Gson by inject()
 
     override suspend fun connect(ip: String) {
         val mSocket = Socket()
@@ -33,14 +38,14 @@ class YeelightAPIImpl : YeelightAPI {
     }
 
     override suspend fun changeRGB(red: Int, green: Int, blue: Int) {
-        val color = (red * 65536) + (green * 256) + blue
+        val color = (red * KoefsForColor.Red.color) + (green * KoefsForColor.Green.color) + blue
         val jsonString = gson.toJson(
             SetCommand(
                 1,
-                "set_rgb",
+                Commands.SetRGB.command,
                 listOf(color, "smooth", 500)
             )
-        ) + nextLine
+        ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
     }
 
@@ -48,10 +53,10 @@ class YeelightAPIImpl : YeelightAPI {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
-                "set_bright",
+                Commands.SetBright.command,
                 listOf(brightness, "smooth", 500)
             )
-        ) + nextLine
+        ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
     }
 
@@ -59,10 +64,10 @@ class YeelightAPIImpl : YeelightAPI {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
-                "set_power",
-                listOf("on", "smooth", 500)
+                Commands.SetPower.command,
+                listOf(Power.On.property, "smooth", 500)
             )
-        ) + nextLine
+        ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
     }
 
@@ -70,10 +75,10 @@ class YeelightAPIImpl : YeelightAPI {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
-                "set_power",
-                listOf("off", "smooth", 500)
+                Commands.SetPower.command,
+                listOf(Power.Off.property, "smooth", 500)
             )
-        ) + nextLine
+        ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
 
     }
@@ -85,17 +90,14 @@ class YeelightAPIImpl : YeelightAPI {
 
     override suspend fun workMode() {
         printToTheLamp(Modes.Work.command)
-
     }
 
     override suspend fun partyMode() {
         printToTheLamp(Modes.Party.command)
-
     }
 
     override suspend fun romanticMode() {
         printToTheLamp(Modes.Romantic.command)
-
     }
 
     override suspend fun setCurrentRGBB(ip: String): PropertyForUI {
@@ -105,17 +107,17 @@ class YeelightAPIImpl : YeelightAPI {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
-                "get_prop",
+                Commands.GetProperties.command,
                 listOf("power", "rgb", "bright")
             )
-        ) + nextLine
+        ) + Tools.NextLine.tool
         while (true) {
             printToTheLamp(jsonString)
             while (true) {
                 currentLine = mReader.readLine()
                 if (currentLine.contains("result")
-                    && (currentLine.contains("on")
-                            || currentLine.contains("off"))
+                    && (currentLine.contains(Power.On.property)
+                            || currentLine.contains(Power.Off.property))
                 ) {
                     value = currentLine
                     break

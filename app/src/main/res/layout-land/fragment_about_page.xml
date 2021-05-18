@@ -26,7 +26,7 @@
         android:layout_height="281dp"
         android:fontFamily="@font/share_tech"
         android:gravity="center"
-        android:text="@string/lorem_ipsum_lorem_ipsum_xvi_lorem_ipsum_lorem_ipsum_letraset_lorem_ipsum_60_aldus_pagemaker_lorem_ipsum"
+        android:text="@string/aboutDescr"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
