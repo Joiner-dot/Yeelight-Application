@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
@@ -54,13 +55,32 @@ class AddLamp : Fragment() {
 
         if (inputCheck(nameForInsert.toString(), ipForInsert.toString())) {
             val lamp = LampUI(0, nameForInsert.toString(), ipForInsert.toString())
-            mLampViewModel.addLamp(lamp)
-            Toast.makeText(
-                requireContext(),
-                "New Lamp was added",
-                Toast.LENGTH_SHORT
-            ).show()
-            findNavController().navigate(R.id.action_addLamp_to_listFragments)
+
+            val progressOfOperation: ProgressBar = requireActivity().findViewById(R.id.progressBar)
+            progressOfOperation.visibility = View.VISIBLE
+
+            val result = mLampViewModel.addLamp(lamp)
+
+
+
+            result.observe(viewLifecycleOwner, { value ->
+                progressOfOperation.visibility = View.INVISIBLE
+                if (value) {
+                    Toast.makeText(
+                        requireContext(),
+                        "New Lamp was added",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    findNavController().popBackStack()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Wrong data",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+
         } else {
             Toast.makeText(
                 requireContext(),
