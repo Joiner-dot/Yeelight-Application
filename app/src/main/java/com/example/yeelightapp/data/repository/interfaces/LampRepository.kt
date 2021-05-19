@@ -26,5 +26,7 @@ interface LampRepository {
 
     suspend fun turnOff()
 
+    suspend fun closeConnection()
+
     suspend fun turnMode(mode: Modes)
 }

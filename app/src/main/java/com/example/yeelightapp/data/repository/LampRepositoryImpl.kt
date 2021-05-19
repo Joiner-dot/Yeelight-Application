@@ -54,4 +54,8 @@ class LampRepositoryImpl(private val storage: LampStorage, private val yeelightA
             Modes.Romantic -> yeelightAPI.romanticMode()
         }
     }
+
+    override suspend fun closeConnection() {
+        yeelightAPI.closeConnection()
+    }
 }

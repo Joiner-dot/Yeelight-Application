@@ -33,9 +33,15 @@ class ListFragments : Fragment() {
 
         val view: View = inflater.inflate(R.layout.list_fragments, container, false)
 
-        val recycle: RecyclerView = view.findViewById(R.id.recyclefrag)
+        return view
+    }
 
-        val floatingActionButton: FloatingActionButton = view.findViewById(R.id.addButton)
+    override fun onResume() {
+        super.onResume()
+
+        val recycle: RecyclerView = requireView().findViewById(R.id.recyclefrag)
+
+        val floatingActionButton: FloatingActionButton = requireView().findViewById(R.id.addButton)
 
         val adapter = ListAdapter(this)
 
@@ -49,7 +55,6 @@ class ListFragments : Fragment() {
         floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragments_to_addLamp)
         }
-        return view
     }
 
 
@@ -76,7 +81,6 @@ class ListFragments : Fragment() {
             Log.d("Vaa", value.toString())
             if (value) {
                 val currentProps = mLampViewModel.setCurrentRGBB(currentLamp.ip, 0)
-
 
                 currentProps.observe(viewLifecycleOwner, { propValue ->
                     if (propValue.power == "on") {
@@ -159,17 +163,17 @@ class ListFragments : Fragment() {
     private fun turnSwitch(onOff: Switch, value: Boolean, image: ImageView) {
         onOff.apply {
             Log.d("kmkmrkgm", this.isChecked.toString())
-                setOnCheckedChangeListener(null)
-                isChecked = value
-                setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        image.setImageResource(R.drawable.on_lamp)
-                        mLampViewModel.turnOn()
-                    } else {
-                        image.setImageResource(R.drawable.list_lamp)
-                        mLampViewModel.turnOff()
-                    }
+            setOnCheckedChangeListener(null)
+            isChecked = value
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    image.setImageResource(R.drawable.on_lamp)
+                    mLampViewModel.turnOn()
+                } else {
+                    image.setImageResource(R.drawable.list_lamp)
+                    mLampViewModel.turnOff()
                 }
+            }
         }
     }
 }

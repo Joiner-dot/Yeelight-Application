@@ -8,7 +8,6 @@ import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.mapper.LampMapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.net.SocketException
 import java.net.SocketTimeoutException
@@ -62,8 +61,10 @@ class LampViewModel(
                 Log.d("Socket", e.printStackTrace().toString())
                 result.postValue(false)
             } catch (e: SocketException) {
+                Log.d("Socket", e.printStackTrace().toString())
                 result.postValue(false)
             } catch (e: Exception) {
+                Log.d("Socket", e.printStackTrace().toString())
                 result.postValue(false)
             }
         }
@@ -72,16 +73,13 @@ class LampViewModel(
 
     fun setCurrentRGBB(ip: String, tryFlag: Int): MutableLiveData<PropertyForUI> {
         var result = MutableLiveData<PropertyForUI>()
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                Log.d("lll", tryFlag.toString())
-                Log.d("lll", ip)
                 result.postValue(repositoryImpl.setCurrentRGBB(ip))
             } catch (e: Exception) {
                 if (tryFlag < 1) {
                     val newVal = tryFlag + 1
                     connect(ip, tryFlag)
-                    delay(1000)
                     result = setCurrentRGBB(ip, newVal)
                 } else {
                     result.postValue(PropertyForUI(0, 0, 0, 0, "off"))
@@ -113,6 +111,12 @@ class LampViewModel(
     fun turnOff() {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.turnOff()
+        }
+    }
+
+    fun closeConnection() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repositoryImpl.closeConnection()
         }
     }
 }

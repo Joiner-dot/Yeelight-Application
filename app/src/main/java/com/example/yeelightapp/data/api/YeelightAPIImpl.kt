@@ -23,15 +23,36 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
 
     private lateinit var mReader: BufferedReader
 
+    private val connections = arrayListOf<Socket>()
+
     override suspend fun connect(ip: String) {
-        val mSocket = Socket()
-        mSocket.connect(InetSocketAddress(ip, 55443), 2000)
-        if (!mSocket.isConnected) {
-            throw SocketTimeoutException()
+
+        var index: Int = isOnConnection(ip)
+
+        if (index == -1) {
+            val mSocket = Socket()
+            mSocket.connect(InetSocketAddress(ip, 55443), 2000)
+            connections.add(mSocket)
+            index = connections.lastIndex
         }
-        mSocket.keepAlive = true
-        mBos = BufferedOutputStream(mSocket.getOutputStream())
-        mReader = BufferedReader(InputStreamReader(mSocket!!.getInputStream()))
+
+        connections[index].keepAlive = true
+        mBos = BufferedOutputStream(connections[index].getOutputStream())
+        mReader = BufferedReader(InputStreamReader(connections[index]!!.getInputStream()))
+        Log.d("JDJJD", connections.size.toString())
+    }
+
+    private fun isOnConnection(ip: String): Int {
+        if (connections.isEmpty()) {
+            return -1
+        }
+        for (i in 0 until connections.size) {
+            Log.d("INET", connections[i].inetAddress.toString())
+            if (connections[i].inetAddress.toString() == "/$ip") {
+                return i
+            }
+        }
+        return -1
     }
 
     override suspend fun changeRGB(red: Int, green: Int, blue: Int) {
@@ -133,6 +154,11 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             properties.result[0]
         )
         return propertyForUI
+    }
+
+    override suspend fun closeConnection() {
+        mReader.close()
+        mBos.close()
     }
 
     private fun printToTheLamp(command: String) {

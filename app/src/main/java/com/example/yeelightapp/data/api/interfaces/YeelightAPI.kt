@@ -22,5 +22,7 @@ interface YeelightAPI {
 
     suspend fun partyMode()
 
+    suspend fun closeConnection()
+
     suspend fun romanticMode()
 }
