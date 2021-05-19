@@ -21,6 +21,4 @@ abstract class ViewModelNew : ViewModel(), KoinComponent {
     }
 
     val lampMapper: LampMapper by inject()
-
-    val gson: Gson by inject()
 }

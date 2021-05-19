@@ -30,7 +30,7 @@ class ManageStaticLight : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val ip: String = args.IP
+        val ip: String = requireActivity().intent.getStringExtra("IP").toString()
 
         val red: SeekBar = requireView().findViewById(R.id.red2)
 
@@ -40,29 +40,36 @@ class ManageStaticLight : Fragment() {
 
         val brightness: SeekBar = requireView().findViewById(R.id.brightness2)
 
-        val onOff: ToggleButton = requireView().findViewById(R.id.onOff2)
+        val onOff: ToggleButton = requireActivity().findViewById(R.id.onOff2)
 
-        val res = viewModel.setCurrentRGBB(ip)
+        val res = viewModel.setCurrentRGBB(ip, 0)
 
         val navigationBottom: BottomNavigationView =
-            requireView().findViewById(R.id.bottomNavigation)
+            requireActivity().findViewById(R.id.navigationMode)
 
-        navigationBottom.selectedItemId = R.id.action_light
-        navigationBottom.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_mode -> {
-                    findNavController().navigate(
-                        ManageStaticLightDirections.actionStatic1ToModes(ip)
-                    )
-                }
-                R.id.action_about -> {
-                    findNavController().navigate(
-                        ManageStaticLightDirections.actionStatic1ToAboutPage(ip)
-                    )
-                }
+        navigationBottom.apply {
+            setOnNavigationItemSelectedListener {
+                return@setOnNavigationItemSelectedListener true
             }
-            return@setOnNavigationItemSelectedListener true
+            setBackgroundResource(R.color.static_manage)
+            selectedItemId = R.id.action_light
+            setOnNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.action_mode -> {
+                        findNavController().navigate(
+                            R.id.action_static1_to_modes
+                        )
+                    }
+                    R.id.action_about -> {
+                        findNavController().navigate(
+                            R.id.action_static1_to_aboutPage
+                        )
+                    }
+                }
+                return@setOnNavigationItemSelectedListener true
+            }
         }
+
         res.observe(this, { list ->
             red.progress = list.red
             green.progress = list.green

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/share_tech"
         android:text="About Yeelight Appliation"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +27,7 @@
         android:fontFamily="@font/share_tech"
         android:gravity="center"
         android:text="@string/aboutDescr"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,18 +36,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationAbout"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        app:backgroundTint="#000000"
-        app:itemIconTint="@color/color_change_bottomview"
-        app:itemTextColor="@color/color_change_bottomview"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/menu_bottom" />
 </androidx.constraintlayout.widget.ConstraintLayout>

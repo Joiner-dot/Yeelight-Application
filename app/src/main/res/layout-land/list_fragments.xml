@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D9C4FF"
+    android:background="@color/bright_purple"
     tools:context=".ui.fragments.ListFragments">
 
     <TextView
@@ -14,7 +14,7 @@
         android:fontFamily="@font/share_tech"
         android:gravity="center"
         android:text="@string/choose_a_lamp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
         android:contentDescription="@string/todo"
         android:focusable="true"
         android:src="@drawable/plus_icon"
-        app:backgroundTint="#FFFFFF"
+        app:backgroundTint="@color/white"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

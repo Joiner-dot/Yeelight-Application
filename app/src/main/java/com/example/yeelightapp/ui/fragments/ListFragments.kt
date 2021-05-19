@@ -1,11 +1,13 @@
 package com.example.yeelightapp.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yeelightapp.R
 import com.example.yeelightapp.lamps.LampUI
+import com.example.yeelightapp.ui.LampActivity
 import com.example.yeelightapp.ui.adapter.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -64,14 +67,23 @@ class ListFragments : Fragment() {
 
         val lampIconForRow = holder.itemView.findViewById<ImageView>(R.id.lampRow)
 
+        val progressOfOperation: ProgressBar = requireActivity().findViewById(R.id.progressBar)
+
 
         lampIconForRow.setImageResource(R.drawable.list_lamp)
         ipForRow.text = currentLamp.ip
-        nameForRow.text = currentLamp.name
-        nameForRow.isClickable = true
+        nameForRow.apply {
+            text = currentLamp.name
+            isClickable = true
+        }
         nameForRow.setOnClickListener {
+
+            progressOfOperation.visibility = View.VISIBLE
             val connectValue = mLampViewModel.connect(currentLamp.ip)
+
+
             connectValue.observe(this, { returned ->
+                progressOfOperation.visibility = View.INVISIBLE
                 if (!returned) {
                     Toast.makeText(
                         requireContext(),
@@ -79,18 +91,21 @@ class ListFragments : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    findNavController().navigate(
-                        ListFragmentsDirections.actionListFragmentsToModes(currentLamp.ip)
-                    )
+                    val intent = Intent(activity, LampActivity::class.java)
+                    intent.putExtra("IP", currentLamp.ip)
+                    startActivity(intent)
                 }
             })
         }
+
         nameForRow.setOnLongClickListener {
 
+            progressOfOperation.visibility = View.VISIBLE
             val result = mLampViewModel.deleteLamp(currentLamp)
 
 
             result.observe(this, { value ->
+                progressOfOperation.visibility = View.INVISIBLE
                 if (value) {
                     Toast.makeText(
                         requireContext(),
@@ -108,6 +123,8 @@ class ListFragments : Fragment() {
             })
             return@setOnLongClickListener true
         }
+
+
         if (firstLamp.id == currentLamp.id) {
             nameForRow.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.border_first_row)

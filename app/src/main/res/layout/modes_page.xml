@@ -24,20 +24,6 @@
         app:layout_constraintVertical_bias="0.899"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationMode"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        app:backgroundTint="#B64AF8"
-        app:itemIconTint="@color/color_change_bottomview"
-        app:itemTextColor="@color/color_change_bottomview"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/menu_bottom" />
 
     <TextView
         android:id="@+id/textView4"
@@ -46,7 +32,7 @@
         android:fontFamily="@font/share_tech"
         android:gravity="center"
         android:text="Select Mode"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,7 +105,7 @@
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Cold Light"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -131,7 +117,7 @@
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Warm Light"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -184,7 +170,7 @@
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Night"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -196,7 +182,7 @@
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Party"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -248,7 +234,7 @@
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Romantic"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -259,7 +245,7 @@
                 android:fontFamily="@font/share_tech"
                 android:gravity="center"
                 android:text="Work"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>

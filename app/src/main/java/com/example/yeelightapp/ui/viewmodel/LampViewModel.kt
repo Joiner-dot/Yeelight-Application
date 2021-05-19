@@ -14,13 +14,19 @@ import java.net.SocketTimeoutException
 class LampViewModel : ViewModelNew() {
 
     val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
-    private var tryFlag = 0
 
 
-    fun addLamp(lamp: LampUI) {
+    fun addLamp(lamp: LampUI): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.addLamp(lampMapper.reverseTransform(lamp))
+            try {
+                repositoryImpl.addLamp(lampMapper.reverseTransform(lamp))
+                result.postValue(true)
+            } catch (e: Exception) {
+                result.postValue(false)
+            }
         }
+        return result
     }
 
     fun turnMode(mode: Modes) {
@@ -61,23 +67,21 @@ class LampViewModel : ViewModelNew() {
         return result
     }
 
-    fun setCurrentRGBB(ip: String): LiveData<PropertyForUI> {
-        try {
-            val result = MutableLiveData<PropertyForUI>()
-            viewModelScope.launch(Dispatchers.IO) {
+    fun setCurrentRGBB(ip: String, tryFlag: Int): LiveData<PropertyForUI> {
+        val result = MutableLiveData<PropertyForUI>()
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
                 result.postValue(repositoryImpl.setCurrentRGBB(ip))
+            } catch (e: SocketException) {
+                if (tryFlag < 1) {
+                    val newTryFlag = tryFlag + 1
+                    setCurrentRGBB(ip, newTryFlag)
+                }
+            } catch (e: Exception) {
+                Log.d("Exception", e.printStackTrace().toString())
             }
-            tryFlag = 0
-            return result
-        } catch (e: SocketException) {
-            if (tryFlag < 1) {
-                tryFlag++
-                setCurrentRGBB(ip)
-            }
-        } catch (e: Exception) {
         }
-        tryFlag = 0
-        return MutableLiveData()
+        return result
     }
 
     fun changeRGB(red: Int, green: Int, blue: Int) {

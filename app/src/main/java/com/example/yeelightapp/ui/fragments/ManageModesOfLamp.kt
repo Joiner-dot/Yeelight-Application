@@ -1,6 +1,7 @@
 package com.example.yeelightapp.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.Display
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.yeelightapp.R
@@ -23,13 +25,41 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ManageModesOfLamp : Fragment() {
 
     private val lampViewModel: LampViewModel by inject()
-    private val args: ManageModesOfLampArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.modes_page, container, false)
+        val view = inflater.inflate(R.layout.modes_page, container, false)
+
+        val navigationBottom: BottomNavigationView =
+            requireActivity().findViewById(R.id.navigationMode)
+
+
+        navigationBottom.apply {
+            setOnNavigationItemSelectedListener {
+                return@setOnNavigationItemSelectedListener true
+            }
+            setBackgroundResource(R.color.mode_manage)
+            selectedItemId = R.id.action_mode
+            setOnNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.action_light -> {
+                        findNavController().navigate(
+                            R.id.action_modes_to_static1
+                        )
+                    }
+                    R.id.action_about -> {
+                        findNavController().navigate(
+                            R.id.action_modes_to_aboutPage
+                        )
+                    }
+                }
+                return@setOnNavigationItemSelectedListener true
+            }
+        }
+
+        return view
     }
 
     @SuppressLint("UseSwitchCompatOrMaterialCode", "UseRequireInsteadOfGet")
@@ -38,9 +68,9 @@ class ManageModesOfLamp : Fragment() {
 
         val onOff: Switch = requireView().findViewById(R.id.onOffMode)
 
-        val ip = args.IP
+        val ip: String = requireActivity().intent.getStringExtra("IP").toString()
 
-        val res = lampViewModel.setCurrentRGBB(ip)
+        val res = lampViewModel.setCurrentRGBB(ip, 0)
 
         val nightMode: ImageButton = requireView().findViewById(R.id.nightMode)
 
@@ -50,25 +80,7 @@ class ManageModesOfLamp : Fragment() {
 
         val romanticMode: ImageButton = requireView().findViewById(R.id.romanticMode)
 
-        val navigationBottom: BottomNavigationView = requireView().findViewById(R.id.navigationMode)
 
-
-        navigationBottom.selectedItemId = R.id.action_mode
-        navigationBottom.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_light -> {
-                    findNavController().navigate(
-                        ManageModesOfLampDirections.actionModesToStatic1(ip)
-                    )
-                }
-                R.id.action_about -> {
-                    findNavController().navigate(
-                        ManageModesOfLampDirections.actionModesToAboutPage(ip)
-                    )
-                }
-            }
-            return@setOnNavigationItemSelectedListener true
-        }
         res.observe(this, { list ->
             turnSwitch(onOff, (list.power) == "on")
         })

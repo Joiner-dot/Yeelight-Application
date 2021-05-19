@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lamp_nav"
+    app:startDestination="@id/modes">
+
+    <fragment
+        android:id="@+id/aboutPage"
+        android:name="com.example.yeelightapp.ui.fragments.AboutPage"
+        android:label="fragment_about_page"
+        tools:layout="@layout/fragment_about_page">
+        <argument
+            android:name="IP"
+            android:defaultValue='"Hello"'
+            app:argType="string" />
+        <action
+            android:id="@+id/action_aboutPage_to_modes"
+            app:destination="@id/modes" />
+        <action
+            android:id="@+id/action_aboutPage_to_static1"
+            app:destination="@id/static1" />
+    </fragment>
+    <fragment
+        android:id="@+id/modes"
+        android:name="com.example.yeelightapp.ui.fragments.ManageModesOfLamp"
+        android:label="modes_page"
+        tools:layout="@layout/modes_page">
+        <argument
+            android:name="IP"
+            android:defaultValue='"Hello"'
+            app:argType="string" />
+        <action
+            android:id="@+id/action_modes_to_static1"
+            app:destination="@id/static1" />
+        <action
+            android:id="@+id/action_modes_to_aboutPage"
+            app:destination="@id/aboutPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/static1"
+        android:name="com.example.yeelightapp.ui.fragments.ManageStaticLight"
+        tools:layout="@layout/fragment_static"
+        android:label="fragment_static">
+        <argument
+            android:name="IP"
+            android:defaultValue='"Hello"'
+            app:argType="string" />
+        <action
+            android:id="@+id/action_static1_to_modes"
+            app:destination="@id/modes" />
+        <action
+            android:id="@+id/action_static1_to_aboutPage"
+            app:destination="@id/aboutPage" />
+    </fragment>
+</navigation>
