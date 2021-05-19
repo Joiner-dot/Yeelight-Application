@@ -8,6 +8,7 @@ import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.lamps.Properties
 import com.example.yeelightapp.lamps.SetCommand
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -112,6 +113,7 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             printToTheLamp(jsonString)
             while (true) {
                 currentLine = mReader.readLine()
+                Log.d("LDLDLD", currentLine)
                 if (currentLine.contains("result")
                     && (currentLine.contains(Power.On.property)
                             || currentLine.contains(Power.Off.property))

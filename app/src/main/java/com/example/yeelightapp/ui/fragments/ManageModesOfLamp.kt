@@ -1,6 +1,7 @@
 package com.example.yeelightapp.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.yeelightapp.R
 import com.example.yeelightapp.data.api.enums.Modes
+import com.example.yeelightapp.ui.MainActivity
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.android.ext.android.inject
@@ -79,7 +81,6 @@ class ManageModesOfLamp : Fragment() {
         val romanticMode: ImageButton = requireView().findViewById(R.id.romanticMode)
 
         val res = lampViewModel.setCurrentRGBB(ip, 0)
-
 
         res.observe(this, { list ->
             turnSwitch(onOff, (list.power) == "on")

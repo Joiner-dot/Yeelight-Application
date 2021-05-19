@@ -52,6 +52,7 @@ class ListFragments : Fragment() {
         return view
     }
 
+
     fun processTheList(
         holder: ListAdapter.MyViewHolder,
         currentLamp: LampUI,
@@ -157,7 +158,7 @@ class ListFragments : Fragment() {
 
     private fun turnSwitch(onOff: Switch, value: Boolean, image: ImageView) {
         onOff.apply {
-            if (!this.isChecked && value) {
+            Log.d("kmkmrkgm", this.isChecked.toString())
                 setOnCheckedChangeListener(null)
                 isChecked = value
                 setOnCheckedChangeListener { _, isChecked ->
@@ -169,7 +170,6 @@ class ListFragments : Fragment() {
                         mLampViewModel.turnOff()
                     }
                 }
-            }
         }
     }
 }
