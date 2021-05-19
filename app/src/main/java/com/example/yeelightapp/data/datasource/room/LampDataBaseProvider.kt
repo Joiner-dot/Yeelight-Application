@@ -2,13 +2,13 @@ package com.example.yeelightapp.data.datasource.room
 
 import android.content.Context
 import androidx.room.Room
-import org.koin.android.ext.koin.androidContext
+import com.example.yeelightapp.data.dao.LampStorage
 
 class LampDataBaseProvider(context: Context) {
 
-    val instance = Room.databaseBuilder(
+    val appDataBase: AppDataBase = Room.databaseBuilder(
         context.applicationContext,
-        LampDataBase::class.java,
+        AppDataBase::class.java,
         "lamps"
     ).build()
 }

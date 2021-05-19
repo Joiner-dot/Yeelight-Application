@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.util.Log
 import com.example.yeelightapp.data.api.enums.*
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
-import com.example.yeelightapp.di.koincomponents.KoinDI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.lamps.Properties
 import com.example.yeelightapp.lamps.SetCommand
@@ -17,7 +16,7 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 
-class YeelightAPIImpl : YeelightAPI, KoinDI() {
+class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
 
     private lateinit var mBos: BufferedOutputStream
 

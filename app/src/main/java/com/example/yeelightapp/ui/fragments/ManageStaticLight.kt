@@ -18,7 +18,6 @@ import org.koin.android.ext.android.inject
 class ManageStaticLight : Fragment() {
 
     private val viewModel: LampViewModel by inject()
-    private val args: ManageStaticLightArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +41,27 @@ class ManageStaticLight : Fragment() {
 
         val onOff: ToggleButton = requireActivity().findViewById(R.id.onOff2)
 
-        val res = viewModel.setCurrentRGBB(ip, 0)
-
         val navigationBottom: BottomNavigationView =
             requireActivity().findViewById(R.id.navigationMode)
+
+        val res = viewModel.setCurrentRGBB(ip, 0)
+
+
+        res.observe(this, { list ->
+            red.progress = list.red
+            green.progress = list.green
+            blue.progress = list.blue
+            brightness.progress = list.bright
+            onOff.setOnCheckedChangeListener(null)
+            onOff.isChecked = (list.power) == "on"
+            onOff.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.turnOn()
+                } else {
+                    viewModel.turnOff()
+                }
+            }
+        })
 
         navigationBottom.apply {
             setOnNavigationItemSelectedListener {
@@ -70,21 +86,6 @@ class ManageStaticLight : Fragment() {
             }
         }
 
-        res.observe(this, { list ->
-            red.progress = list.red
-            green.progress = list.green
-            blue.progress = list.blue
-            brightness.progress = list.bright
-            onOff.setOnCheckedChangeListener(null)
-            onOff.isChecked = (list.power) == "on"
-            onOff.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    viewModel.turnOn()
-                } else {
-                    viewModel.turnOff()
-                }
-            }
-        })
         red.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {}
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}

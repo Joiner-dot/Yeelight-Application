@@ -70,8 +70,6 @@ class ManageModesOfLamp : Fragment() {
 
         val ip: String = requireActivity().intent.getStringExtra("IP").toString()
 
-        val res = lampViewModel.setCurrentRGBB(ip, 0)
-
         val nightMode: ImageButton = requireView().findViewById(R.id.nightMode)
 
         val workMode: ImageButton = requireView().findViewById(R.id.workMode)
@@ -80,10 +78,13 @@ class ManageModesOfLamp : Fragment() {
 
         val romanticMode: ImageButton = requireView().findViewById(R.id.romanticMode)
 
+        val res = lampViewModel.setCurrentRGBB(ip, 0)
+
 
         res.observe(this, { list ->
             turnSwitch(onOff, (list.power) == "on")
         })
+
         nightMode.setOnClickListener {
             lampViewModel.turnMode(Modes.Night)
             turnSwitch(onOff, true)

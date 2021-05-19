@@ -3,15 +3,19 @@ package com.example.yeelightapp.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.yeelightapp.data.api.enums.Modes
-import com.example.yeelightapp.di.koincomponents.ViewModelNew
+import com.example.yeelightapp.data.repository.interfaces.LampRepository
 import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.lamps.PropertyForUI
+import com.example.yeelightapp.mapper.LampMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.SocketException
 import java.net.SocketTimeoutException
 
-class LampViewModel : ViewModelNew() {
+class LampViewModel(
+    private val repositoryImpl: LampRepository,
+    private val lampMapper: LampMapper
+) : ViewModel() {
 
     val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
 
@@ -48,7 +52,7 @@ class LampViewModel : ViewModelNew() {
         return result
     }
 
-    fun connect(ip: String): LiveData<Boolean> {
+    fun connect(ip: String, tryFlag: Int): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -58,24 +62,28 @@ class LampViewModel : ViewModelNew() {
                 Log.d("Socket", e.printStackTrace().toString())
                 result.postValue(false)
             } catch (e: SocketException) {
-                connect(ip)
+                result.postValue(false)
             } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
+                Log.d("E", "KKK")
                 result.postValue(false)
             }
         }
         return result
     }
 
-    fun setCurrentRGBB(ip: String, tryFlag: Int): LiveData<PropertyForUI> {
-        val result = MutableLiveData<PropertyForUI>()
+    fun setCurrentRGBB(ip: String, tryFlag: Int): MutableLiveData<PropertyForUI> {
+        var result = MutableLiveData<PropertyForUI>()
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 result.postValue(repositoryImpl.setCurrentRGBB(ip))
             } catch (e: Exception) {
                 if (tryFlag < 1) {
-                    val newTryFlag = tryFlag + 1
-                    setCurrentRGBB(ip, newTryFlag)
+                    val newVal = tryFlag + 1
+                    connect(ip, tryFlag)
+                    result = setCurrentRGBB(ip, newVal)
+                } else {
+                    result.postValue(PropertyForUI(0, 0, 0, 0, "off"))
+                    Log.d("Exception", e.printStackTrace().toString())
                 }
             }
         }

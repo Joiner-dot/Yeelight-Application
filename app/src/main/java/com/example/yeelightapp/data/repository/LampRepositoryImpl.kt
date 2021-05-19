@@ -3,23 +3,23 @@ package com.example.yeelightapp.data.repository
 import androidx.lifecycle.LiveData
 import com.example.yeelightapp.data.api.enums.Modes
 import com.example.yeelightapp.data.api.interfaces.YeelightAPI
-import com.example.yeelightapp.data.dao.DataBase
+import com.example.yeelightapp.data.dao.LampStorage
 import com.example.yeelightapp.data.repository.interfaces.LampRepository
 import com.example.yeelightapp.lamps.LampDB
 import com.example.yeelightapp.lamps.PropertyForUI
 
 
-class LampRepositoryImpl(private val dataBase: DataBase, private val yeelightAPI: YeelightAPI) :
+class LampRepositoryImpl(private val storage: LampStorage, private val yeelightAPI: YeelightAPI) :
     LampRepository {
 
-    override val readAllData: LiveData<List<LampDB>> = dataBase.selectAllLamps()
+    override val readAllData: LiveData<List<LampDB>> = storage.selectAllLamps()
 
     override suspend fun addLamp(lamp: LampDB) {
-        dataBase.insertNewLamp(lamp)
+        storage.insertNewLamp(lamp)
     }
 
     override suspend fun deleteLamp(id: Int) {
-        dataBase.deleteLamp(id)
+        storage.deleteLamp(id)
     }
 
     override suspend fun connect(ip: String) {

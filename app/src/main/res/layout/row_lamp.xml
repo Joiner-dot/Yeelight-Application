@@ -54,4 +54,21 @@
         app:layout_constraintVertical_bias="0.25"
         tools:srcCompat="@drawable/list_lamp" />
 
+    <Switch
+        android:id="@+id/powerList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/share_tech"
+        android:textColor="#000000"
+        android:textColorHint="#FFFFFF"
+        android:textStyle="bold"
+        android:thumbTint="@color/thumb"
+        android:track="@drawable/switch_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.835"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.542" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

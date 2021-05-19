@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -69,17 +66,39 @@ class ListFragments : Fragment() {
 
         val progressOfOperation: ProgressBar = requireActivity().findViewById(R.id.progressBar)
 
+        val powerLamp: Switch = holder.itemView.findViewById(R.id.powerList)
 
-        lampIconForRow.setImageResource(R.drawable.list_lamp)
+        val connectionValue = mLampViewModel.connect(currentLamp.ip, 0)
+
+
+        connectionValue.observe(viewLifecycleOwner, { value ->
+            Log.d("Vaa", value.toString())
+            if (value) {
+                val currentProps = mLampViewModel.setCurrentRGBB(currentLamp.ip, 0)
+
+
+                currentProps.observe(viewLifecycleOwner, { propValue ->
+                    if (propValue.power == "on") {
+                        lampIconForRow.setImageResource(R.drawable.on_lamp)
+                        turnSwitch(powerLamp, true, lampIconForRow)
+                    } else {
+                        lampIconForRow.setImageResource(R.drawable.list_lamp)
+                        turnSwitch(powerLamp, false, lampIconForRow)
+                    }
+                })
+            } else {
+                disEnableLamp(powerLamp, lampIconForRow)
+            }
+        })
         ipForRow.text = currentLamp.ip
         nameForRow.apply {
             text = currentLamp.name
             isClickable = true
         }
         nameForRow.setOnClickListener {
-
             progressOfOperation.visibility = View.VISIBLE
-            val connectValue = mLampViewModel.connect(currentLamp.ip)
+
+            val connectValue = mLampViewModel.connect(currentLamp.ip, 0)
 
 
             connectValue.observe(this, { returned ->
@@ -128,6 +147,29 @@ class ListFragments : Fragment() {
         if (firstLamp.id == currentLamp.id) {
             nameForRow.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.border_first_row)
+        }
+    }
+
+    private fun disEnableLamp(onOff: Switch, image: ImageView) {
+        onOff.isEnabled = false
+        image.setImageResource(R.drawable.list_lamp)
+    }
+
+    private fun turnSwitch(onOff: Switch, value: Boolean, image: ImageView) {
+        onOff.apply {
+            if (!this.isChecked && value) {
+                setOnCheckedChangeListener(null)
+                isChecked = value
+                setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        image.setImageResource(R.drawable.on_lamp)
+                        mLampViewModel.turnOn()
+                    } else {
+                        image.setImageResource(R.drawable.list_lamp)
+                        mLampViewModel.turnOff()
+                    }
+                }
+            }
         }
     }
 }
