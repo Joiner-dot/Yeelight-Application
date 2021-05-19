@@ -72,13 +72,11 @@ class LampViewModel : ViewModelNew() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 result.postValue(repositoryImpl.setCurrentRGBB(ip))
-            } catch (e: SocketException) {
+            } catch (e: Exception) {
                 if (tryFlag < 1) {
                     val newTryFlag = tryFlag + 1
                     setCurrentRGBB(ip, newTryFlag)
                 }
-            } catch (e: Exception) {
-                Log.d("Exception", e.printStackTrace().toString())
             }
         }
         return result
