@@ -35,11 +35,9 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             connections.add(mSocket)
             index = connections.lastIndex
         }
-
         connections[index].keepAlive = true
         mBos = BufferedOutputStream(connections[index].getOutputStream())
         mReader = BufferedReader(InputStreamReader(connections[index]!!.getInputStream()))
-        Log.d("JDJJD", connections.size.toString())
     }
 
     private fun isOnConnection(ip: String): Int {
@@ -47,7 +45,6 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             return -1
         }
         for (i in 0 until connections.size) {
-            Log.d("INET", connections[i].inetAddress.toString())
             if (connections[i].inetAddress.toString() == "/$ip") {
                 return i
             }
@@ -115,11 +112,19 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
     }
 
     override suspend fun romanticMode() {
-        Log.d("HHEHEH", Modes.Romantic.command)
         printToTheLamp(Modes.Romantic.command)
     }
 
     override suspend fun setCurrentRGBB(ip: String): PropertyForUI {
+        val index = isOnConnection(ip)
+        if (connections[index].isOutputShutdown ||
+            connections[index].isInputShutdown ||
+            !connections[index].isBound ||
+            connections[index].isClosed ||
+            !connections[index].isConnected
+        ) {
+            throw SocketTimeoutException()
+        }
         val value: String?
         var currentLine: String
         val propertyForUI: PropertyForUI
@@ -134,7 +139,6 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             printToTheLamp(jsonString)
             while (true) {
                 currentLine = mReader.readLine()
-                Log.d("LDLDLD", currentLine)
                 if (currentLine.contains("result")
                     && (currentLine.contains(Power.On.property)
                             || currentLine.contains(Power.Off.property))
@@ -157,8 +161,10 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
     }
 
     override suspend fun closeConnection() {
-        mReader.close()
-        mBos.close()
+        for (i in 0 until connections.size) {
+            connections[i].close()
+        }
+        connections.clear()
     }
 
     private fun printToTheLamp(command: String) {

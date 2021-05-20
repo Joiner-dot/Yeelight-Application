@@ -57,6 +57,10 @@ class ListFragments : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mLampViewModel.closeConnection()
+    }
 
     fun processTheList(
         holder: ListAdapter.MyViewHolder,
@@ -78,7 +82,6 @@ class ListFragments : Fragment() {
 
 
         connectionValue.observe(viewLifecycleOwner, { value ->
-            Log.d("Vaa", value.toString())
             if (value) {
                 val currentProps = mLampViewModel.setCurrentRGBB(currentLamp.ip, 0)
 
@@ -162,7 +165,6 @@ class ListFragments : Fragment() {
 
     private fun turnSwitch(onOff: Switch, value: Boolean, image: ImageView) {
         onOff.apply {
-            Log.d("kmkmrkgm", this.isChecked.toString())
             setOnCheckedChangeListener(null)
             isChecked = value
             setOnCheckedChangeListener { _, isChecked ->

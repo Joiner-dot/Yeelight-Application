@@ -44,6 +44,8 @@ class ManageStaticLight : Fragment() {
         val navigationBottom: BottomNavigationView =
             requireActivity().findViewById(R.id.navigationMode)
 
+        val connectionVal = viewModel.connect(ip, 0)
+
         val res = viewModel.setCurrentRGBB(ip, 0)
 
 

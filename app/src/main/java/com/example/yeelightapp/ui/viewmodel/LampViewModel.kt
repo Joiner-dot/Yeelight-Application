@@ -1,5 +1,9 @@
 package com.example.yeelightapp.ui.viewmodel
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.yeelightapp.data.api.enums.Modes
@@ -7,14 +11,17 @@ import com.example.yeelightapp.data.repository.interfaces.LampRepository
 import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.mapper.LampMapper
+import com.example.yeelightapp.ui.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.SocketException
 import java.net.SocketTimeoutException
 
+
 class LampViewModel(
     private val repositoryImpl: LampRepository,
     private val lampMapper: LampMapper,
+    private val context: Context
 ) : ViewModel() {
 
     val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
@@ -71,20 +78,19 @@ class LampViewModel(
         return result
     }
 
-    fun setCurrentRGBB(ip: String, tryFlag: Int): MutableLiveData<PropertyForUI> {
-        var result = MutableLiveData<PropertyForUI>()
+    fun setCurrentRGBB(ip: String, tryFlag: Int): LiveData<PropertyForUI> {
+        val result = MutableLiveData<PropertyForUI>()
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 result.postValue(repositoryImpl.setCurrentRGBB(ip))
             } catch (e: Exception) {
-                if (tryFlag < 1) {
-                    val newVal = tryFlag + 1
-                    connect(ip, tryFlag)
-                    result = setCurrentRGBB(ip, newVal)
-                } else {
-                    result.postValue(PropertyForUI(0, 0, 0, 0, "off"))
-                    Log.d("Exception", e.printStackTrace().toString())
+                val intent = Intent(context, MainActivity::class.java)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+                if (context is Activity) {
+                    context.finish()
                 }
+                Runtime.getRuntime().exit(0)
             }
         }
         return result

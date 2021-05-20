@@ -80,6 +80,8 @@ class ManageModesOfLamp : Fragment() {
 
         val romanticMode: ImageButton = requireView().findViewById(R.id.romanticMode)
 
+        val connectionVal = lampViewModel.connect(ip, 0)
+
         val res = lampViewModel.setCurrentRGBB(ip, 0)
 
         res.observe(this, { list ->
