@@ -2,7 +2,6 @@ package com.example.yeelightapp.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import com.example.yeelightapp.ui.adapter.ListAdapter
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ListFragments : Fragment() {
@@ -31,9 +29,7 @@ class ListFragments : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val view: View = inflater.inflate(R.layout.list_fragments, container, false)
-
-        return view
+        return inflater.inflate(R.layout.list_fragments, container, false)
     }
 
     override fun onResume() {
@@ -74,6 +70,9 @@ class ListFragments : Fragment() {
 
         val lampIconForRow = holder.itemView.findViewById<ImageView>(R.id.lampRow)
 
+        val loaderImage = holder.itemView.findViewById<ProgressBar>(R.id.loadingImage)
+        loaderImage.visibility = View.VISIBLE
+
         val progressOfOperation: ProgressBar = requireActivity().findViewById(R.id.progressBar)
 
         val powerLamp: Switch = holder.itemView.findViewById(R.id.powerList)
@@ -86,6 +85,7 @@ class ListFragments : Fragment() {
                 val currentProps = mLampViewModel.setCurrentRGBB(currentLamp.ip, 0)
 
                 currentProps.observe(viewLifecycleOwner, { propValue ->
+                    loaderImage.visibility = View.INVISIBLE
                     if (propValue.power == "on") {
                         lampIconForRow.setImageResource(R.drawable.on_lamp)
                         turnSwitch(powerLamp, true, lampIconForRow)
@@ -95,6 +95,7 @@ class ListFragments : Fragment() {
                     }
                 })
             } else {
+                loaderImage.visibility = View.INVISIBLE
                 disEnableLamp(powerLamp, lampIconForRow)
             }
         })
