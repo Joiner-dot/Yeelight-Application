@@ -1,3 +1,3 @@
 package com.example.yeelightapp.lamps
 
-data class Properties(val id: Int, val result: List<String>)
+data class Properties(val result: List<String>, val id: String)

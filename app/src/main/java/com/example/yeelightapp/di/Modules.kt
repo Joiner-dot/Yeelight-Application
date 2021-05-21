@@ -8,6 +8,7 @@ import com.example.yeelightapp.data.datasource.room.LampDataBaseProvider
 import com.example.yeelightapp.data.repository.LampRepositoryImpl
 import com.example.yeelightapp.data.repository.interfaces.LampRepository
 import com.example.yeelightapp.mapper.LampMapper
+import com.example.yeelightapp.ui.RestartTools
 import com.example.yeelightapp.ui.viewmodel.LampViewModel
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
@@ -22,7 +23,9 @@ val appModule: Module = module {
 
     single<YeelightAPI> { YeelightAPIImpl(get()) }
 
-    single { LampViewModel(get(), get(), androidContext()) }
+    single { RestartTools(androidContext()) }
+
+    single { LampViewModel(get(), get(), get()) }
 
     single { LampDataBaseProvider(get()) }
 

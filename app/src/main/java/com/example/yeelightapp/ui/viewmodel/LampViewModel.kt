@@ -12,6 +12,7 @@ import com.example.yeelightapp.lamps.LampUI
 import com.example.yeelightapp.lamps.PropertyForUI
 import com.example.yeelightapp.mapper.LampMapper
 import com.example.yeelightapp.ui.MainActivity
+import com.example.yeelightapp.ui.RestartTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.SocketException
@@ -21,7 +22,7 @@ import java.net.SocketTimeoutException
 class LampViewModel(
     private val repositoryImpl: LampRepository,
     private val lampMapper: LampMapper,
-    private val context: Context
+    private val restartTools: RestartTools
 ) : ViewModel() {
 
     val readAllData: LiveData<List<LampUI>> = lampMapper.transform(repositoryImpl.readAllData)
@@ -83,14 +84,8 @@ class LampViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 result.postValue(repositoryImpl.setCurrentRGBB(ip))
-            } catch (e: Exception) {
-                val intent = Intent(context, MainActivity::class.java)
-                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
-                if (context is Activity) {
-                    context.finish()
-                }
-                Runtime.getRuntime().exit(0)
+            } catch (e: SocketTimeoutException) {
+                restartTools.restartApp()
             }
         }
         return result
