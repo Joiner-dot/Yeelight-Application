@@ -1,13 +1,17 @@
 package com.example.yeelightapp.ui.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -128,27 +132,37 @@ class ListFragments : Fragment() {
 
         nameForRow.setOnLongClickListener {
 
-            progressOfOperation.visibility = View.VISIBLE
-            val result = mLampViewModel.deleteLamp(currentLamp)
-
-
-            result.observe(this, { value ->
-                progressOfOperation.visibility = View.INVISIBLE
-                if (value) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Deleted",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed to Delete",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    findNavController().navigate(R.id.action_listFragments_self)
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setTitle("Delete the Lamp?")
+                .setMessage("Information about this lamp will be deleted from the list")
+                .setPositiveButton("Yes") { dialog, id ->
+                    progressOfOperation.visibility = View.VISIBLE
+                    val result = mLampViewModel.deleteLamp(currentLamp)
+                    dialog.cancel()
+                    result.observe(this, { value ->
+                        progressOfOperation.visibility = View.INVISIBLE
+                        if (value) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Deleted",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to Delete",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            findNavController().navigate(R.id.action_listFragments_self)
+                        }
+                    })
                 }
-            })
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.cancel()
+                }
+
+            val dialog: AlertDialog = builder.show()
+            dialog.show()
             return@setOnLongClickListener true
         }
 
