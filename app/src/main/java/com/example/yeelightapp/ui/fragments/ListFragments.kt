@@ -3,15 +3,12 @@ package com.example.yeelightapp.ui.fragments
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -81,12 +78,12 @@ class ListFragments : Fragment() {
 
         val powerLamp: Switch = holder.itemView.findViewById(R.id.powerList)
 
-        val connectionValue = mLampViewModel.connect(currentLamp.ip, 0)
+        val connectionValue = mLampViewModel.connect(currentLamp.ip)
 
 
         connectionValue.observe(viewLifecycleOwner, { value ->
             if (value) {
-                val currentProps = mLampViewModel.setCurrentRGBB(currentLamp.ip, 0)
+                val currentProps = mLampViewModel.setCurrentRGBB(currentLamp.ip)
 
                 currentProps.observe(viewLifecycleOwner, { propValue ->
                     loaderImage.visibility = View.INVISIBLE
@@ -111,7 +108,7 @@ class ListFragments : Fragment() {
         nameForRow.setOnClickListener {
             progressOfOperation.visibility = View.VISIBLE
 
-            val connectValue = mLampViewModel.connect(currentLamp.ip, 0)
+            val connectValue = mLampViewModel.connect(currentLamp.ip)
 
 
             connectValue.observe(this, { returned ->

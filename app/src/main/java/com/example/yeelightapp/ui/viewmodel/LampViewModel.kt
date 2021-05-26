@@ -59,7 +59,7 @@ class LampViewModel(
         return result
     }
 
-    fun connect(ip: String, tryFlag: Int): LiveData<Boolean> {
+    fun connect(ip: String): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.Default) {
             try {
@@ -79,7 +79,7 @@ class LampViewModel(
         return result
     }
 
-    fun setCurrentRGBB(ip: String, tryFlag: Int): LiveData<PropertyForUI> {
+    fun setCurrentRGBB(ip: String): LiveData<PropertyForUI> {
         val result = MutableLiveData<PropertyForUI>()
         viewModelScope.launch(Dispatchers.IO) {
             try {

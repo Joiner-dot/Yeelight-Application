@@ -1,26 +1,13 @@
 package com.example.yeelightapp
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.yeelightapp.data.api.YeelightAPIImpl
-import com.example.yeelightapp.data.api.interfaces.YeelightAPI
-import com.example.yeelightapp.data.repository.LampRepositoryImpl
-import com.example.yeelightapp.lamps.PropertyForUI
-import com.example.yeelightapp.mapper.LampMapper
-import com.example.yeelightapp.ui.RestartTools
-import com.example.yeelightapp.ui.viewmodel.LampViewModel
+import com.example.yeelightapp.data.api.enums.Commands
+import com.example.yeelightapp.data.api.enums.Modes
+import com.example.yeelightapp.data.api.enums.Power
+import com.example.yeelightapp.data.api.enums.Tools
+import com.example.yeelightapp.lamps.SetCommand
 import com.google.gson.Gson
-import kotlinx.coroutines.*
 import org.junit.Test
-
 import org.junit.Assert.*
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.getScopeId
-import org.koin.core.component.inject
-import java.lang.Exception
-import java.net.SocketException
-import java.net.SocketTimeoutException
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -29,46 +16,86 @@ import java.net.SocketTimeoutException
  */
 class YeelightApiTest {
 
-    private val ip = "192.168.1.45"
+    private val gson = Gson()
 
-    private val fakeIp = "14.08.2000"
+    private val turnOffCommand =
+        """{"id":1,"method":"set_power","params":["off","smooth",500]}""" + "\r\n"
 
-    private val testPropertyForUI = PropertyForUI(255, 173, 0, 3, "off")
+    private val turnOnCommand =
+        """{"id":1,"method":"set_power","params":["on","smooth",500]}""" + "\r\n"
 
-    private val yeelightAPIImpl = YeelightAPIImpl(Gson())
+    private val changeRGBCommand =
+        """{"id":1,"method":"set_rgb","params":[2555,"smooth",500]}""" + "\r\n"
+
+    private val changeBrightnessCommand =
+        """{"id":1,"method":"set_bright","params":[99,"smooth",500]}""" + "\r\n"
+
+    private val nightModeCommand =
+        """{"id":1, "method":"set_scene","params":["cf",0,0,"5000,1,16755200,1,5000,1,16744960,1"]}""" + "\r\n"
+
+    private val partyModeCommand =
+        """{"id":1, "method":"set_scene","params":["cf",0,0,"2000,1,16711680,80,2000,1,16755200,80,2000,1,65280,80,2000,1,65535,80,2000,1,16711935,80,2000,1,255,80"]}""" + "\r\n"
+
+    private val workModeCommand =
+        """{"id":1, "method":"set_scene","params":["cf",0,0,"5000,1,16777215,60,15000,1,16760480,40"]}""" + "\r\n"
+
+    private val romanticModeCommand =
+        """{"id":1, "method":"set_scene","params":["cf",0,0,"2000,1,16711870,60,800,1,11141375,40"]}""" + "\r\n"
+
 
     @Test
-    fun connectionTest() {
-        runBlocking {
-            launch(Dispatchers.Default) {
-                yeelightAPIImpl.connect(ip)
-            }
-        }
-    }
-
-    @Test(expected = SocketTimeoutException::class)
-    fun connectionFakeIpTest() {
-        runBlocking {
-            launch(Dispatchers.Default) {
-                yeelightAPIImpl.connect(fakeIp)
-            }
-        }
+    fun turnOffTestCommand() {
+        val jsonString = gson.toJson(
+            SetCommand(
+                1,
+                Commands.SetPower.command,
+                listOf(Power.Off.property, "smooth", 500)
+            )
+        ) + Tools.NextLine.tool
+        assertEquals(turnOffCommand, jsonString)
     }
 
     @Test
-    fun getRGBActual() {
-        connectionTest()
-        runBlocking {
-            launch(Dispatchers.Default) {
-                yeelightAPIImpl.turnOn()
-                delay(1000)
-                yeelightAPIImpl.changeRGB(255, 173, 0)
-                delay(1000)
-                yeelightAPIImpl.turnOff()
-                delay(1000)
-                val result = yeelightAPIImpl.setCurrentRGBB(ip)
-                assertEquals(testPropertyForUI, result)
-            }
-        }
+    fun turnOnTestCommand() {
+        val jsonString = gson.toJson(
+            SetCommand(
+                1,
+                Commands.SetPower.command,
+                listOf(Power.On.property, "smooth", 500)
+            )
+        ) + Tools.NextLine.tool
+        assertEquals(turnOnCommand, jsonString)
+    }
+
+    @Test
+    fun changeRGBTestCommand() {
+        val jsonString = gson.toJson(
+            SetCommand(
+                1,
+                Commands.SetRGB.command,
+                listOf(2555, "smooth", 500)
+            )
+        ) + Tools.NextLine.tool
+        assertEquals(changeRGBCommand, jsonString)
+    }
+
+    @Test
+    fun changeBrightnessTestCommand() {
+        val jsonString = gson.toJson(
+            SetCommand(
+                1,
+                Commands.SetBright.command,
+                listOf(99, "smooth", 500)
+            )
+        ) + Tools.NextLine.tool
+        assertEquals(changeBrightnessCommand, jsonString)
+    }
+
+    @Test
+    fun modesTest() {
+        assertEquals(nightModeCommand, Modes.Night.command)
+        assertEquals(partyModeCommand, Modes.Party.command)
+        assertEquals(romanticModeCommand, Modes.Romantic.command)
+        assertEquals(workModeCommand, Modes.Work.command)
     }
 }

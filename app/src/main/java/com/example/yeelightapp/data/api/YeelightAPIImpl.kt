@@ -52,7 +52,7 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
         return -1
     }
 
-    override suspend fun changeRGB(red: Int, green: Int, blue: Int) {
+    override suspend fun changeRGB(red: Int, green: Int, blue: Int):String {
         val color = (red * KoefsForColor.Red.color) + (green * KoefsForColor.Green.color) + blue
         val jsonString = gson.toJson(
             SetCommand(
@@ -62,9 +62,10 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             )
         ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
+        return jsonString
     }
 
-    override suspend fun changeBrightness(brightness: Int) {
+    override suspend fun changeBrightness(brightness: Int):String {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
@@ -73,9 +74,10 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             )
         ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
+        return jsonString
     }
 
-    override suspend fun turnOn() {
+    override suspend fun turnOn():String {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
@@ -84,9 +86,10 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             )
         ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
+        return jsonString
     }
 
-    override suspend fun turnOff() {
+    override suspend fun turnOff():String {
         val jsonString = gson.toJson(
             SetCommand(
                 1,
@@ -95,24 +98,27 @@ class YeelightAPIImpl(private val gson: Gson) : YeelightAPI {
             )
         ) + Tools.NextLine.tool
         printToTheLamp(jsonString)
-
+        return jsonString
     }
 
-    override suspend fun nightMode() {
+    override suspend fun nightMode():String {
         printToTheLamp(Modes.Night.command)
-
+        return Modes.Night.command
     }
 
-    override suspend fun workMode() {
+    override suspend fun workMode():String {
         printToTheLamp(Modes.Work.command)
+        return Modes.Work.command
     }
 
-    override suspend fun partyMode() {
+    override suspend fun partyMode():String {
         printToTheLamp(Modes.Party.command)
+        return Modes.Party.command
     }
 
-    override suspend fun romanticMode() {
+    override suspend fun romanticMode():String {
         printToTheLamp(Modes.Romantic.command)
+        return Modes.Romantic.command
     }
 
     override suspend fun setCurrentRGBB(ip: String): PropertyForUI {

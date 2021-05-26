@@ -6,23 +6,23 @@ interface YeelightAPI {
 
     suspend fun connect(ip: String)
 
-    suspend fun changeRGB(red: Int, green: Int, blue: Int)
+    suspend fun changeRGB(red: Int, green: Int, blue: Int):String
 
-    suspend fun changeBrightness(brightness: Int)
+    suspend fun changeBrightness(brightness: Int):String
 
-    suspend fun turnOn()
+    suspend fun turnOn():String
 
-    suspend fun turnOff()
+    suspend fun turnOff():String
 
     suspend fun setCurrentRGBB(ip: String): PropertyForUI
 
-    suspend fun nightMode()
+    suspend fun nightMode():String
 
-    suspend fun workMode()
+    suspend fun workMode():String
 
-    suspend fun partyMode()
+    suspend fun partyMode():String
 
     suspend fun closeConnection()
 
-    suspend fun romanticMode()
+    suspend fun romanticMode():String
 }
