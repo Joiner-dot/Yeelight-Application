@@ -31,6 +31,7 @@
         android:contentDescription="@string/todo"
         android:focusable="true"
         android:src="@drawable/plus_icon"
+        android:theme="@style/Theme.AppCompat"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
