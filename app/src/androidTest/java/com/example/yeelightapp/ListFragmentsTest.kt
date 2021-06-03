@@ -76,6 +76,18 @@ class ListFragmentTest {
     }
 
     @Test
+    fun currentDistTest() {
+        val titleScenario = launchFragmentInContainer<ListFragments>()
+        titleScenario.onFragment { fragment ->
+            assertNotNull(fragment.activity)
+            val navController = TestNavHostController(fragment.activity!!)
+            navController.setGraph(R.navigation.my_nav)
+            val currentDestination = navController.currentDestination
+            assertEquals(R.id.listFragments, currentDestination?.id)
+        }
+    }
+
+    @Test
     fun testRecreate() {
         val scenario = activityRule.scenario
         scenario.recreate()
